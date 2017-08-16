@@ -1,5 +1,6 @@
 # SubX Codes
 
+This repository contains codes for accessing and processing SubX data in various languages/environments, including Matlab, NCL, Python, GrADS, and bash.
 
 # Matlab
 
