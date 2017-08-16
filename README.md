@@ -1,7 +1,7 @@
 # SubX Codes
 
 
-MATLAB
+# Matlab
 
 
 Matlab Codes for Accessing SubX Data
@@ -19,7 +19,7 @@ Matlab Codes for Accessing SubX Data
   These codes must be in the same directory as getSubXFieldsIRI.m or placed in your ~username/matlab/lib/ directory for matlab to find them when running. 
   
   
-  NCL
+  # NCL
 
   getSubXFieldsIRI.ncl -- A sample ncl program for getting SubX 2-D fields
   Modify variables at top listed as User Defined Variables
@@ -27,14 +27,14 @@ Matlab Codes for Accessing SubX Data
   No external Codes
   
   
-  PYTHON
+  # Python
   
   Coming soon
   
-  GrADS
+  # GrADS
   
   Coming Soon
   
-  BASH
+  # bash
   
   Coming Soon
