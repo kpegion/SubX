@@ -83,7 +83,7 @@ for ivar=1:nvars
       group=char(groups(imodel));
  
       % Open File
-      inFname=strcat(url,'.',group,'/.',model,'/.hindcast/.',varname,'/dods'); % input filename
+      inFname=strcat(url,'.',group,'/.',model,'/.',type,'/.',varname,'/dods'); % input filename
       ncid=netcdf.open(char(inFname),'NC_NOWRITE');
 
       % Determine number of variables, dimensions, etc. in file
