@@ -37,9 +37,9 @@ This repository contains codes for accessing and processing SubX data in various
   
   getSubXFieldsIRI.py -- A sample python program for getting SubX 2-D fields
   
-  Modify variables at top listed Variables to be modified by user
+  Modify variables at top listed as Variables to be modified by user
   
-  This code was testd with Python version 2.7.5
+  This code was tested with Python version 2.7.5
   
   
   # GrADS
