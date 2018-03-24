@@ -48,8 +48,6 @@ userpath('../lib/');
 %**************************************************************************************%
 inPath='/shared/subx/hindcast/'; % Input directory
 outPath=inPath;                        % User output directory
-
-varnames={'ua';'ua';'rlut';'zg';'tas';'ts';'va';'va';'zg';'pr'}; % Variable names
                                                                                                                                        1,1           Top
 varnames={'ua';'ua';'rlut';'zg';'tas';'ts';'va';'va';'zg';'pr'}; % Variable names
 plevstrs={'850';'200';'toa';'500';'2m';'sfc';'200';'850';'200';'sfc'}; % Variable levels
