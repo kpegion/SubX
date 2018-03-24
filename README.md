@@ -4,10 +4,10 @@ This repository contains codes for accessing and processing SubX data in various
 
 # Matlab
 
-V1/ - contains version 1 of the Matlab codes for getting the SubX data from the IRI Data Library
+V1/ - version 1, Matlab code for getting the SubX data from the IRI Data Library, 
  getSubXFieldsIRI.m -- A sample matlab program for getting SubX 2-D Fields
     
-V2/ - contains version 2, which consists of getSubXFieldsIRI.m and additional programs for processing the SubX data into ensemble means, calculating climatologies, and calculating anomalies of the ensemble means.
+V2/ - version 2, consists of getSubXFieldsIRI.m and additional programs for processing the SubX data into ensemble means, calculating climatologies, and calculating anomalies of the ensemble means.
   
  # NCL
 
