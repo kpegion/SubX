@@ -4,27 +4,12 @@ This repository contains codes for accessing and processing SubX data in various
 
 # Matlab
 
-
-  getSubXFieldsIRI.m -- A sample matlab program for getting SubX 2-D Fields
+V1/ - contains version 1 of the Matlab codes for getting the SubX data from the IRI Data Library
+ getSubXFieldsIRI.m -- A sample matlab program for getting SubX 2-D Fields
     
-  Modify variables at the top listed as variables to be modified by user
-
-  External Codes used by getSubXFieldsIRI.m
+V2/ - contains version 2, which consists of getSubXFieldsIRI.m and additional programs for processing the SubX data into ensemble means, calculating climatologies, and calculating anomalies of the ensemble means.
   
-  nctime2datestrdaily.m   
-  
-  setupNetCDF3D.m
-  
-  writeNetCDFGlobalAtts.m
-  
-  writeNetCDFData3D.m
-  
-  getFillValue.m
-
-  These files must be in the same directory as getSubXFieldsIRI.m or placed in a directory that is in your Matlab search path.  For further information on setting up the Matlab search path, see the "What is the Matlab Search Path" http://www.mathworks.com/help/matlab/matlab_env/what-is-the-matlab-search-path.html
-  
-  
-  # NCL
+ # NCL
 
   getSubXFieldsIRI.ncl -- A sample ncl program for getting SubX 2-D fields
   
@@ -33,7 +18,7 @@ This repository contains codes for accessing and processing SubX data in various
   No external Codes
   
   
-  # Python
+ # Python
   
   getSubXFieldsIRI.py -- A sample python program for getting SubX 2-D fields
   
@@ -42,11 +27,11 @@ This repository contains codes for accessing and processing SubX data in various
   This code was tested with Python version 2.7.5
   
   
-  # GrADS
+ # GrADS
   
     getSubXIRI.gs -- A sample program for getting SubX data.
 
-Note that the output files in this case will contain all ensemble members and levels as opposed to the other codes which write the ensemble members and levels as separate files.
+Note that the output files in this case will contain all ensemble members and levels as opposed to the other codes which write the ensemble members and levels as separate files.  These output files will NOT work properly with the Matlab data processing codes above because they produce files in a different format. 
 
 Mapping the dimensions appropriately in GrADS across the IRI OpenDAP server can be challenging.  Jennifer Adams (COLA/GMU) has provided the following information to assist GrADS users in understanding how this works..
 
@@ -181,6 +166,3 @@ All of the above examples use URLs as DSET entries. They rely on the OPeNDAP cap
 
 The example given is for the 2-meter air temperature, but for other variables it is only necessary to edit a few lines at the top to change the metadata.
   
-  # bash
-  
-  Coming Soon
