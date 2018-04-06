@@ -8,6 +8,8 @@ V1/ - version 1, Matlab code for getting the SubX data from the IRI Data Library
  getSubXFieldsIRI.m -- A sample matlab program for getting SubX 2-D Fields
     
 V2/ - version 2, consists of getSubXFieldsIRI.m and additional programs for processing the SubX data into ensemble means, calculating climatologies, and calculating anomalies of the ensemble means.
+Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.m to download data
+                Starting Apr 10, 2018, use getSubXFieldsIRIXYLMSP.m to download data
   
  # NCL
 
@@ -17,6 +19,8 @@ V2/ - version 2, consists of getSubXFieldsIRI.m and additional programs for proc
 
   No external Codes
   
+  Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.ncl to download data
+                Starting Apr 10, 2018, use getSubXFieldsIRIXYLMSP.ncl to download data
   
  # Python
   
@@ -26,10 +30,16 @@ V2/ - version 2, consists of getSubXFieldsIRI.m and additional programs for proc
   
   This code was tested with Python version 2.7.5
   
+  Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.py to download data
+                Starting Apr 10, 2018, use getSubXFieldsIRIXYLMSP.py to download data
+  
   
  # GrADS
   
     getSubXIRI.gs -- A sample program for getting SubX data.
+    
+    Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.gs to download data
+                Starting Apr 10, 2018, use getSubXFieldsIRIXYLMSP.gs to download data
 
 Note that the output files in this case will contain all ensemble members and levels as opposed to the other codes which write the ensemble members and levels as separate files.  These output files will NOT work properly with the Matlab data processing codes above because they produce files in a different format. 
 
