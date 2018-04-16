@@ -127,7 +127,7 @@ fillValue=-9.9e8;
              end
 
              % Loop over months
-             for imn=imn1:imn2
+             for imn=1:12
 
                 % Set month string
                 mm=num2str(imn);
