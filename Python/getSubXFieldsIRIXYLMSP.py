@@ -170,7 +170,7 @@ for ivar in range(nvars):
            tmptime = ncout.createVariable('time',leads.dtype.char,('time'))
            tmpdata = ncout.createVariable(varname,data.dtype.char,('time','lat','lon'))
            
-                      tmplon[:]=lonvals
+           tmplon[:]=lonvals
            tmplat[:]=latvals
            tmptime[:]=leadsvals
            tmpdata[:]=data
