@@ -59,7 +59,7 @@ dfv=-9.99e-8;                                                  # Default missing
 #------------------------------------------------
 #  Variables DO NOT MODIFY
 #------------------------------------------------
-url='http://iridl.ldeo.columbia.edu/home/.mbell/.SubX/'
+url='http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/';
 nvars=len(varnames)
 nmodels=len(models)
 
