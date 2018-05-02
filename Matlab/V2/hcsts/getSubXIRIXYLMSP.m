@@ -16,7 +16,7 @@ type='hindcast';                                                % hindcast or fo
 %--------------------------------------------------------------------------------------
 % DO NOT MODIFY
 %--------------------------------------------------------------------------------------
-url='http://iridl.ldeo.columbia.edu/home/.mbell/.SubX/'; % IRI URL
+url='http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/'; % IRI URL
 nvars=numel(varnames);
 nmodels=numel(models);
 
