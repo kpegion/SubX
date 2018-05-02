@@ -61,9 +61,7 @@ writedata=1
 
 
 * This is where the data are hosted
-*_URL='http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/'group'/'model'/.'type'/.'var'/dods'
-_URL='http://iridl.ldeo.columbia.edu/home/.mbell/.SubX/'group'/'model'/.'type'/.'var'/dods'
-
+_URL='http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/'group'/'model'/.'type'/.'var'/dods'
 
 * Use ncdump to get the missing value
 cmd=_ncdump' -h '_URL' | grep 'var':missing_value'
