@@ -3,7 +3,7 @@
 Creates folders in the form [hindcast/forecast]/model/var/pvel/ and outputs 
 files YYYMMDD.eN.nc
 
-Change L34-L44 to download the data of your choice.
+Change L36-L46 to download the data of your choice.
 
 See https://sites.google.com/view/raybellwaves/pythonrsmas
 for notes on installing python.
