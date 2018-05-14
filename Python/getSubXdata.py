@@ -33,7 +33,7 @@ from datetime import datetime, timedelta
 
 # user defined variables. Options are showns after the #:
 # -------------------------------------------------------
-outPath='/Volumes/SAMSUNG/WORK/POSTDOC_RSMAS_2016/DATA/SubX/'
+outPath='/place/with/lots/of/storage/'
 ftype='hindcast' # hindcast, forecast
 models = ['CCSM4'] # 30LCESM1, 46LCESM1, CCSM4, CFSv2, FIMr1p1, GEFS, GEM,
 # GEOS_V2p1, NESM
