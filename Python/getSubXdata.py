@@ -181,63 +181,69 @@ for i, model in enumerate(models):
                     
                 # Outfile name
                 ofname = '%s.e%s.nc' % (yyyymmdd,ee)
-                rootgrp = Dataset(outDir+ofname, 'w', FORMAT="NETCDF4")
                 
-                # Create dimensions
-                rootgrp.createDimension('time',nleads)
-                rootgrp.createDimension('lat',ny)                
-                rootgrp.createDimension('lon',nx)
+                # Only create the file is it doesn't exist
+                if not os.path.isfile(outDir+ofname):
+                    rootgrp = Dataset(outDir+ofname, 'w', FORMAT="NETCDF4")
                 
-                # Create variables
-                times = rootgrp.createVariable('time',leads.dtype.char,
+                    # Create dimensions
+                    rootgrp.createDimension('time',nleads)
+                    rootgrp.createDimension('lat',ny)                
+                    rootgrp.createDimension('lon',nx)
+                
+                    # Create variables
+                    times = rootgrp.createVariable('time',leads.dtype.char,
                                                ('time'))
-                lats = rootgrp.createVariable('lat',lat.dtype.char,('lat'))
-                lons = rootgrp.createVariable('lon',lat.dtype.char,('lon'))
-                datas = rootgrp.createVariable(var,data.dtype.char,
-                                               ('time','lat','lon'))
+                    lats = rootgrp.createVariable('lat',lat.dtype.char,('lat'))
+                    lons = rootgrp.createVariable('lon',lat.dtype.char,('lon'))
+                    datas = rootgrp.createVariable(var,data.dtype.char,
+                                                   ('time','lat','lon'))
                 
-                # Write data
-                times[:] = datesnum
-                lats[:] = latvals
-                lons[:] = lonvals
-                datas[:] = data
+                    # Write data
+                    times[:] = datesnum
+                    lats[:] = latvals
+                    lons[:] = lonvals
+                    datas[:] = data
                 
-                # Set Variable Attributes
-                for attr in leadatts:
-                    times.setncattr(attr,leads.getncattr(attr))
-                    times.setncattr('units',unitst)
-                for attr in latatts:                    
-                    lats.setncattr(attr,lat.getncattr(attr))
-                for attr in lonatts:
-                    lons.setncattr(attr,lon.getncattr(attr))
-                for attr in ncfile.variables[var].ncattrs():
-                    datas.setncattr(attr,ncfile.variables[var].getncattr(attr))
+                    # Set Variable Attributes
+                    for attr in leadatts:
+                        times.setncattr(attr,leads.getncattr(attr))
+                        times.setncattr('units',unitst)
+                    for attr in latatts:                    
+                        lats.setncattr(attr,lat.getncattr(attr))
+                    for attr in lonatts:
+                        lons.setncattr(attr,lon.getncattr(attr))
+                    for attr in ncfile.variables[var].ncattrs():
+                        datas.setncattr(attr,
+                                        ncfile.variables[var].getncattr(attr))
                     
-                # Set fillValue
-                try:
-                    datas.setncattr('fillValue',ncfile.variables[var].\
-                                    getncattr('fillValue'))
-                except:
+                    # Set fillValue
                     try:
                         datas.setncattr('fillValue',ncfile.variables[var].\
-                                        getncattr('missing_value'))
+                                        getncattr('fillValue'))
                     except:
-                        datas.setncattr('fillValue',dfv)
+                        try:
+                            datas.setncattr('fillValue',ncfile.variables[var].\
+                                            getncattr('missing_value'))
+                        except:
+                            datas.setncattr('fillValue',dfv)
                         
-                # Set Global Attributes for Output
-                now=datetime.now()
-                rootgrp.long_title=ncfile.variables[var].getncattr('long_name')
-                rootgrp.title=ncfile.variables[var].getncattr('long_name')
-                rootgrp.comments='SubX project'+\
-                'http://cola.gmu.edu/~kpegion/subx/'
-                rootgrp.CreationDate=now.strftime("%Y-%m-%d %H:%M")
-                rootgrp.CreatedBy=os.getlogin()
-                rootgrp.Source='https://github.com/kpegion/SubX/tree/master/'+\
-                'Python/getSubXdata.py'
-                rootgrp.Institution='SubX IRI%s' % (url)
+                    # Set Global Attributes for Output
+                    now=datetime.now()
+                    rootgrp.long_title=ncfile.variables[var].\
+                    getncattr('long_name')
+                    rootgrp.title=ncfile.variables[var].\
+                    getncattr('long_name')
+                    rootgrp.comments='SubX project'+\
+                    'http://cola.gmu.edu/~kpegion/subx/'
+                    rootgrp.CreationDate=now.strftime("%Y-%m-%d %H:%M")
+                    rootgrp.CreatedBy=os.getlogin()
+                    rootgrp.Source='https://github.com/kpegion/SubX/tree/'+\
+                    'master/Python/getSubXdata.py'
+                    rootgrp.Institution='SubX IRI%s' % (url)
 
-                # Close output file
-                rootgrp.close()
+                    # Close output file
+                    rootgrp.close()
                 
         # Close input file   
-        ncfile.close()                
+        ncfile.close()
