@@ -24,11 +24,11 @@ Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.m to download data
   
  # Python
   
-  getSubXFieldsIRI.py -- A sample python program for getting SubX 2-D fields
+  getSubXFieldsIRI.py -- A sample python program for getting SubX 2-D fields. Tested on python v2.7
+  
+  getSubXdata.py -- A sample python program for getting SubX 2-D fields. Tested on python v3.6
   
   Modify variables at top listed as Variables to be modified by user
-  
-  This code was tested with Python version 2.7.5
   
   Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.py to download data
                 Starting Apr 10, 2018, use getSubXFieldsIRIXYLMSP.py to download data
