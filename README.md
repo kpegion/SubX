@@ -1,6 +1,6 @@
 # SubX Codes
 
-This repository contains codes for accessing and processing SubX data in various languages/environments, including Matlab, NCL, Python, GrADS.
+This repository contains codes for accessing and processing SubX data in various languages/environments, including Matlab, NCL, Python and GrADS.
 
 # Matlab
 
@@ -22,19 +22,11 @@ Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.m to download data
   Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.ncl to download data
                 Starting Apr 10, 2018, use getSubXFieldsIRIXYLMSP.ncl to download data
   
- # Python
+# Python
   
-  getSubXFieldsIRI.py -- A sample python program for getting SubX 2-D fields
+`Python/download_data/generate_full_py_ens_files.ksh` creates python files to download each ensemble member for a chosen model etc. These can then be run in parallel.
   
-  Modify variables at top listed as Variables to be modified by user
-  
-  This code was tested with Python version 2.7.5
-  
-  Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.py to download data
-                Starting Apr 10, 2018, use getSubXFieldsIRIXYLMSP.py to download data
-  
-  
- # GrADS
+# GrADS
   
     getSubXIRI.gs -- A sample program for getting SubX data.
     
