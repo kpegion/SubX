@@ -1,7 +1,7 @@
 #!/bin/ksh
-# Generate individual files to allow downloading of each ensemble member in parallel.
+# Generate individual files to allow downloading a time series of each ensemble member in parallel.
 #
-# 5/16/18
+# 5/17/18
 # Created by Ray Bell (https://github.com/raybellwaves).
 
 # User defined variables:
@@ -17,6 +17,8 @@ mod=CCSM4 # 30LCESM1, 46LCESM1, CCSM4, CFSv2, FIMr1p1, GEFS, GEM, GEOS_V2p1, NES
 inst=RSMAS # CESM, 
 var=zg # pr, tas, ts, rlut, ua, va, zg
 plev=500 # 200, 500, 850, 2m, sfc, toa, None
+lat=65 # -90 - 90
+lon=305 # 0 - 359
 
 # Default variables
 url=http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/
@@ -40,7 +42,7 @@ rm -rf tmp.py
 
 for ens in {1..${nens}}; do
     # Replace text in python template file for each ensemble member
-    cat getSubXdatafull_template.py\
+    cat getSubXdatats_template.py\
     | sed 's|url|'${url}'|g'\
     | sed 's|outdir|'${outdir}'|g'\
     | sed 's/ftype/'${ftype}'/g'\
@@ -48,8 +50,10 @@ for ens in {1..${nens}}; do
     | sed 's/inst/'${inst}'/g'\
     | sed 's/var/'${var}'/g'\
     | sed 's/plev/'${plev}'/g'\
+    | sed 's/lat/'${lat}'/g'\
+    | sed 's/lon/'${lon}'/g'\
     | sed 's/ens/'${ens}'/g'\
-    > getSubXdatafull_e${ens}.py
+    > getSubXdatats_e${ens}.py
 done
 
 # This section submits the python scripts on a HPC.
@@ -60,7 +64,7 @@ if [ 1 -eq 0 ];then
     mkdir -p logs submit_scripts
     for ens in {1..${nens}}; do
         # Replace text in submit template file
-        cat submit_full.sh | sed 's/ens/'${ens}'/g' > submit_scripts/submit_${ens}.sh
+        cat submit_ts.sh | sed 's/ens/'${ens}'/g' > submit_scripts/submit_${ens}.sh
         bsub < submit_scripts/submit_${ens}.sh
     done
 fi

@@ -25,6 +25,8 @@ Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.m to download data
 # Python
   
 `Python/download_data/generate_full_py_ens_files.ksh` creates python files to download each ensemble member for a chosen model etc. These can then be run in parallel.
+
+`Python/download_data/generate_ts_py_ens_files.ksh` creates python files to download each ensemble member for a chosen model etc. at one location. These can then be run in parallel.
   
 # GrADS
   
