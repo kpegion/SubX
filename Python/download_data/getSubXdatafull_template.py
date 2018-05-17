@@ -28,33 +28,40 @@ outDir = outPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/full/'
 if not os.path.isdir(outDir):
     os.makedirs(outDir)
     
-# The server may time out so check what the last file was
-# created, delete it, and start it from there again
-filescreated = glob.glob(outDir+'*e'+str(int(en))+'*.nc')
-nfilescreated = len(filescreated)
-if nfilescreated != 0:
-    filescreated.sort()
-    os.unlink(filescreated[-1])
-else:
-    nfilescreated = 1
-
-for ic in range(nfilescreated-1, len(remote_data.S.values)):
-    # Convert to a pandas.Timestamp to get year, month, data
-    date = pd.Timestamp(remote_data.S.values[ic])
-    year = str(date.year)
-    # Use zfill to pad with 0
-    month = str(date.month).zfill(2)
-    day = str(date.day).zfill(2)
-                
-    # Out file name
-    ofname = year+month+day+'.e'+str(int(en))+'.nc'
-    
-    # Select the 2D filed and keep the other dimensions
-    da2 = da.sel(M=en, S=remote_data.S.values[ic])
-    if len(remote_data.dims) == 6:
-        da2 = da2.expand_dims('S').expand_dims('M').expand_dims('P')
+# Check if the last file has been created
+datefinal = pd.Timestamp(remote_data.S.values[-1])
+yearfinal = str(datefinal.year)
+monthfinal = str(datefinal.month).zfill(2)
+dayfinal = str(datefinal.day).zfill(2)
+ofname = yearfinal+monthfinal+dayfinal+'.e'+str(int(en))+'.nc'
+if not os.path.isfile(outDir+ofname):
+    # The server may time out so check what the last file was
+    # created, delete it, and start it from there again
+    filescreated = glob.glob(outDir+'*e'+str(int(en))+'*.nc')
+    nfilescreated = len(filescreated)
+    if nfilescreated != 0:
+        filescreated.sort()
+        os.unlink(filescreated[-1])
     else:
-        da2 = da2.expand_dims('S').expand_dims('M')
+        nfilescreated = 1
+    
+    for ic in range(nfilescreated-1, len(remote_data.S.values)):
+        # Convert to a pandas.Timestamp to get year, month, data
+        date = pd.Timestamp(remote_data.S.values[ic])
+        year = str(date.year)
+        # Use zfill to pad with 0
+        month = str(date.month).zfill(2)
+        day = str(date.day).zfill(2)
+                    
+        # Out file name
+        ofname = year+month+day+'.e'+str(int(en))+'.nc'
         
-    # Save file
-    da2.to_netcdf(outDir+ofname)
+        # Select the 2D filed and keep the other dimensions
+        da2 = da.sel(M=en, S=remote_data.S.values[ic])
+        if len(remote_data.dims) == 6:
+            da2 = da2.expand_dims('S').expand_dims('M').expand_dims('P')
+        else:
+            da2 = da2.expand_dims('S').expand_dims('M')
+            
+        # Save file
+        da2.to_netcdf(outDir+ofname)
