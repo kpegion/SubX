@@ -40,7 +40,8 @@ ofname = yearfinal+monthfinal+dayfinal+'.e'+str(int(en))+'.y'+str(int(yv))+\
 if not os.path.isfile(outDir+ofname):
     # The server may time out so check what the last file was
     # created, delete it, and start it from there again
-    filescreated = glob.glob(outDir+'*e'+str(int(en))+'*.nc')
+    filescreated = glob.glob(outDir+'*.e'+str(int(en))+'.y'+str(int(yv))+\
+                             '.x'+str(int(xv))+'.nc')
     nfilescreated = len(filescreated)
     if nfilescreated != 0:
         filescreated.sort()
