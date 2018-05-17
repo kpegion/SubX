@@ -29,7 +29,7 @@ if not os.path.isdir(outDir):
     os.makedirs(outDir)
     
 # Check if the last file has been created
-datefinal = pd.Timestamp(remote_data.S.values[-1])
+datefinal = pd.Timestamp(da.S.values[-1])
 yearfinal = str(datefinal.year)
 monthfinal = str(datefinal.month).zfill(2)
 dayfinal = str(datefinal.day).zfill(2)
@@ -45,9 +45,9 @@ if not os.path.isfile(outDir+ofname):
     else:
         nfilescreated = 1
     
-    for ic in range(nfilescreated-1, len(remote_data.S.values)):
+    for ic in range(nfilescreated-1, len(da.S.values)):
         # Convert to a pandas.Timestamp to get year, month, data
-        date = pd.Timestamp(remote_data.S.values[ic])
+        date = pd.Timestamp(da.S.values[ic])
         year = str(date.year)
         # Use zfill to pad with 0
         month = str(date.month).zfill(2)
@@ -57,7 +57,7 @@ if not os.path.isfile(outDir+ofname):
         ofname = year+month+day+'.e'+str(int(en))+'.nc'
         
         # Select the 2D filed and keep the other dimensions
-        da2 = da.sel(M=en, S=remote_data.S.values[ic])
+        da2 = da.sel(M=en, S=da.S.values[ic])
         if len(remote_data.dims) == 6:
             da2 = da2.expand_dims('S').expand_dims('M').expand_dims('P')
         else:
