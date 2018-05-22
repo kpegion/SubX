@@ -67,14 +67,14 @@ if not os.path.isfile(outDir+ofinalname):
             try:
                 da2 = da2.expand_dims('S').expand_dims('M').expand_dims('P').\
                       expand_dims('Y').expand_dims('X')
-            except: IndexError
+            except IndexError:
                 exit('All data likely downloaded. You can check '+\
                       inFname[:-4]+'#views to see if it can generate an image.')
         else:
             try:
                 da2 = da2.expand_dims('S').expand_dims('M').expand_dims('Y').\
                       expand_dims('X')
-            except: IndexError
+            except IndexError:
                 exit('All data likely downloaded. You can check '+\
                       inFname[:-4]+'#views to see if it can generate an image.')            
         # Save file
