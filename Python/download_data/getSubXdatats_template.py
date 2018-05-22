@@ -35,9 +35,9 @@ datefinal = pd.Timestamp(da.S.values[-1])
 yearfinal = str(datefinal.year)
 monthfinal = str(datefinal.month).zfill(2)
 dayfinal = str(datefinal.day).zfill(2)
-ofname = yearfinal+monthfinal+dayfinal+'.e'+str(int(en))+'.y'+str(int(yv))+\
+ofinalname = yearfinal+monthfinal+dayfinal+'.e'+str(int(en))+'.y'+str(int(yv))+\
 '.x'+str(int(xv))+'.nc'
-if not os.path.isfile(outDir+ofname):
+if not os.path.isfile(outDir+ofinalname):
     # The server may time out so check what the last file was
     # created, delete it, and start it from there again
     filescreated = glob.glob(outDir+'*.e'+str(int(en))+'.y'+str(int(yv))+\
