@@ -63,12 +63,12 @@ if not os.path.isfile(outDir+ofinalname):
                 da2 = da2.expand_dims('S').expand_dims('M').expand_dims('P')
             except IndexError:
                 exit('All data likely downloaded. You can check '+\
-                      inFname[:-4]+'#views to see if it can generate an image.')
+                     inFname[:-4]+'#views to see if it can generate an image.')
         else:
             try:
                 da2 = da2.expand_dims('S').expand_dims('M')
             except IndexError:
-                exit('All data likely downloaded. You can check '+\       
-                      inFname[:-4]+'#views to see if it can generate an image.')
+                exit('All data likely downloaded. You can check '+\
+                     inFname[:-4]+'#views to see if it can generate an image.')
         # Save file
         da2.to_netcdf(outDir+ofname)
