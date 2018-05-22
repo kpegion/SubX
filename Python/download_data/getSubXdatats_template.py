@@ -64,11 +64,18 @@ if not os.path.isfile(outDir+ofinalname):
         # Select the 1D field and keep the other dimensions
         da2 = da.sel(S=da.S.values[ic])
         if len(remote_data.dims) == 6:
-            da2 = da2.expand_dims('S').expand_dims('M').expand_dims('P').\
-                  expand_dims('Y').expand_dims('X')
+            try:
+                da2 = da2.expand_dims('S').expand_dims('M').expand_dims('P').\
+                      expand_dims('Y').expand_dims('X')
+            execpt: IndexError
+                exit('All data likely downloaded. You can check '+\
+                      inFname[:-4]+'#views to see if it can generate an image.')
         else:
-            da2 = da2.expand_dims('S').expand_dims('M').expand_dims('Y').\
-                  expand_dims('X')
-            
+            try:
+                da2 = da2.expand_dims('S').expand_dims('M').expand_dims('Y').\
+                      expand_dims('X')
+            execpt: IndexError
+                exit('All data likely downloaded. You can check '+\
+                      inFname[:-4]+'#views to see if it can generate an image.')            
         # Save file
         da2.to_netcdf(outDir+ofname)
