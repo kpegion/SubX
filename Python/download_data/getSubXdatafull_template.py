@@ -22,7 +22,7 @@ remote_data = xr.open_dataarray(inFname)
 if len(remote_data.dims) == 6:
     da = remote_data.sel(P=plev, M=en)
 if len(remote_data.dims) == 5:
-    da = remote_data.sel(M=en))
+    da = remote_data.sel(M=en)
     
 outDir = outPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/full/'
 if not os.path.isdir(outDir):

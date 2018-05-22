@@ -64,7 +64,3 @@ if [ 1 -eq 0 ];then
         bsub < submit_scripts/submit_${ens}.sh
     done
 fi
-    
-    
-    
-
