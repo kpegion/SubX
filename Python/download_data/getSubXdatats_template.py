@@ -49,7 +49,7 @@ if nfilescreated != 0:
     _lastday = _lastdate[6:8]
     ts = pd.Timestamp(_lastyear+'-'+_lastmonth+'-'+_lastday+' 00:00:00')
     # Find the index of this in da.S
-    datesdf = da.S.to_dataframe().reset_index(drop=True)
+    datesdf = da.S.to_dataframe()
     _icstart = datesdf.index.get_loc(ts)
 else:
     _icstart = 0
