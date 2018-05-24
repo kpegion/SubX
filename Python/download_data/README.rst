@@ -15,7 +15,7 @@ To setup and run:
  
     $ git clone https://github.com/kpegion/SubX.git
     $ cd Python/download_data
-    $ conda env create -f requirements-py36.yml
+    $ conda env create -f ci/requirements-py36.yml
     $ conda activate SubXdata
     $ # edit variables in generate_full_py_ens_files.ksh
     $ chmod u+x generate_full_py_ens_files.ksh

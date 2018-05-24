@@ -69,8 +69,6 @@ for ic in range(_icstart, len(da.S.values)):
         ofname = year+month+day+'.e'+str(int(en))+'.y'+str(int(yv))+'.x'+\
         str(int(xv))+'.nc'
         
-        # Select the 1D field and keep the other dimensions
-        da2 = da.sel(S=da.S.values[ic])
         # Data often finishes before end of file
         if len(remote_data.dims) == 6:
             try:

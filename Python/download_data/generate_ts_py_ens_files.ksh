@@ -61,10 +61,10 @@ done
 if [ 1 -eq 0 ];then
     rm -rf logs/*
     rm -rf submit_scripts/*
-    mkdir -p logs submit_scripts
+    mkdir -p logs
     for ens in {1..${nens}}; do
         # Replace text in submit template file
-        cat submit_ts.sh | sed 's/ens/'${ens}'/g' > submit_scripts/submit_${ens}.sh
-        bsub < submit_scripts/submit_${ens}.sh
+        cat submit_ts.sh | sed 's/ens/'${ens}'/g' > submit_scripts/submit_e${ens}.sh
+        bsub < submit_scripts/submit_e${ens}.sh
     done
 fi
