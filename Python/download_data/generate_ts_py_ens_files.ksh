@@ -60,7 +60,7 @@ done
 # Turned off in default
 if [ 1 -eq 0 ];then
     rm -rf logs/*
-    rm -rf submit_scripts/*
+    rm -rf submit_scripts/*e*.sh
     mkdir -p logs
     for ens in {1..${nens}}; do
         # Replace text in submit template file
