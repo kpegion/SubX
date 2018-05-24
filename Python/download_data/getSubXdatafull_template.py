@@ -22,7 +22,7 @@ en = ens.0
 inFname = rl+'.'+ins+'/.'+mo+'/.'+ft+'/.'+va+'/dods'
 remote_data = xr.open_dataarray(inFname)
 if len(remote_data.dims) == 6:
-    da = remote_data.sel(P=plev, M=en)
+    da = remote_data.sel(P=pl, M=en)
 if len(remote_data.dims) == 5:
     da = remote_data.sel(M=en)
     
