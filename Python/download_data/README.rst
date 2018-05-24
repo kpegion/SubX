@@ -21,3 +21,5 @@ To setup and run:
     $ chmod u+x generate_full_py_ens_files.ksh
     $ ./generate_full_py_ens_files.ksh
     $ # python getSubXdatafull_e1.py
+
+Note: Sometimes when running the all scripts at once all but one will fail as they all try to create the direction. In this case just run them again by hand.
