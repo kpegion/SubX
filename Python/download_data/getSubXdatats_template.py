@@ -6,6 +6,8 @@ import os
 import glob
 import xarray as xr
 import pandas as pd
+import numpy as np
+
 
 # Inputs
 rl = 'url'
@@ -22,7 +24,7 @@ en = ens.0
 inFname = rl+'.'+ins+'/.'+mo+'/.'+ft+'/.'+va+'/dods'
 remote_data = xr.open_dataarray(inFname)
 if len(remote_data.dims) == 6:
-    da = remote_data.sel(P=plev, M=en, Y=yv, X=xv)
+    da = remote_data.sel(P=pl, M=en, Y=yv, X=xv)
 if len(remote_data.dims) == 5:
     da = remote_data.sel(M=en, Y=yv, X=xv)
     
@@ -30,26 +32,32 @@ outDir = outPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/ts/'
 if not os.path.isdir(outDir):
     os.makedirs(outDir)
     
-# Check if the last file has been created
-datefinal = pd.Timestamp(da.S.values[-1])
-yearfinal = str(datefinal.year)
-monthfinal = str(datefinal.month).zfill(2)
-dayfinal = str(datefinal.day).zfill(2)
-ofinalname = yearfinal+monthfinal+dayfinal+'.e'+str(int(en))+'.y'+str(int(yv))+\
-'.x'+str(int(xv))+'.nc'
-if not os.path.isfile(outDir+ofinalname):
-    # The server may time out so check what the last file was
-    # created, delete it, and start it from there again
-    filescreated = glob.glob(outDir+'*.e'+str(int(en))+'.y'+str(int(yv))+\
-                             '.x'+str(int(xv))+'.nc')
-    nfilescreated = len(filescreated)
-    if nfilescreated != 0:
-        filescreated.sort()
-        os.unlink(filescreated[-1])
-    else:
-        nfilescreated = 1
+# Check if any files have been created so they are not downloaded again
+filescreated = glob.glob(outDir+'*.e'+str(int(en))+'.y'+str(int(yv))+\
+                         '.x'+str(int(xv))+'.nc')
+nfilescreated = len(filescreated)
+if nfilescreated != 0:
+    filescreated.sort()
+    # Remove last file created incase stopped while saving
+    _lastfile = filescreated[-1]
+    os.unlink(_lastfile)
+    # Find the date and index of the last created file
+    # Split the string by / and get the first 8 chars
+    _lastdate = _lastfile.split('/')[-1][0:8]
+    _lastyear = _lastdate[0:4]
+    _lastmonth = _lastdate[4:6]
+    _lastday = _lastdate[6:8]
+    ts = pd.Timestamp(_lastyear+'-'+_lastmonth+'-'+_lastday+' 00:00:00')
+    # Find the index of this in da.S
+    datesdf = da.S.to_dataframe()
+    _icstart = datesdf.index.get_loc(ts)
+else:
+    _icstart = 0
     
-    for ic in range(nfilescreated-1, len(da.S.values)):
+for ic in range(_icstart, len(da.S.values)):
+    # Check if data exists for this start date otherwise skip
+    da2 = da.sel(S=da.S.values[ic])
+    if not np.all(np.isnan(da2)):
         # Convert to a pandas.Timestamp to get year, month, data
         date = pd.Timestamp(da.S.values[ic])
         year = str(date.year)
@@ -61,8 +69,7 @@ if not os.path.isfile(outDir+ofinalname):
         ofname = year+month+day+'.e'+str(int(en))+'.y'+str(int(yv))+'.x'+\
         str(int(xv))+'.nc'
         
-        # Select the 1D field and keep the other dimensions
-        da2 = da.sel(S=da.S.values[ic])
+        # Data often finishes before end of file
         if len(remote_data.dims) == 6:
             try:
                 da2 = da2.expand_dims('S').expand_dims('M').expand_dims('P').\
