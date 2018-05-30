@@ -1,6 +1,6 @@
 """ Create SubX daily climatology.
 
-Template file to be used with generate_ts_clim.ksh.
+The file is filled in by generate_ts_clim.ksh.
 """
 import os
 import xarray as xr
@@ -20,7 +20,6 @@ va = 'var'
 pl = plev
 yv = lat.0
 xv = lon.0
-en = ens.0
 
 url = 'http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/'
 ddir = outPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/ts/'
@@ -71,7 +70,7 @@ if smooth_clim == 1:
     # Period rolling twice to make it triangular smoothing
     # See https://bit.ly/2H3o0Mf
     da_day_clim_smooth = da_day_clim_wnan.copy()
-    for i in range(0, 2):
+    for i in range(2):
         # Extand the DataArray to allow rolling to do periodic
         da_day_clim_smooth = xr.concat(da_day_clim_smooth[-15,:],
                                        da_day_clim_smooth,

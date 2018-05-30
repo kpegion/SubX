@@ -1,6 +1,6 @@
 """ Download SubX data from IRI.
 
-Template file to be used with generate_full_py_ens_files.ksh.
+This file is filled in by generate_full_py_ens_files.ksh.
 """
 import os
 import glob
