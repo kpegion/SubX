@@ -1,6 +1,6 @@
 """ Download SubX data from IRI.
 
-Template file to be used with generate_ts_py_ens_files.ksh.
+This file is filled in by generate_ts_py_ens_files.ksh.
 """
 import os
 import glob
@@ -21,6 +21,8 @@ yv = lat.0
 xv = lon.0
 en = ens.0
 
+ysave = str(int(yv))
+xsave = str(int(xv))
 inFname = rl+'.'+ins+'/.'+mo+'/.'+ft+'/.'+va+'/dods'
 remote_data = xr.open_dataarray(inFname)
 if len(remote_data.dims) == 6:
@@ -33,8 +35,8 @@ if not os.path.isdir(outDir):
     os.makedirs(outDir)
     
 # Check if any files have been created so they are not downloaded again
-filescreated = glob.glob(outDir+'*.e'+str(int(en))+'.y'+str(int(yv))+\
-                         '.x'+str(int(xv))+'.nc')
+filescreated = glob.glob(outDir+'*.e'+str(int(en))+'.y'+ysave+\
+                         '.x'+xsave+'.nc')
 nfilescreated = len(filescreated)
 if nfilescreated != 0:
     filescreated.sort()
@@ -66,8 +68,8 @@ for ic in range(_icstart, len(da.S.values)):
         day = str(date.day).zfill(2)
                     
         # Out file name
-        ofname = year+month+day+'.e'+str(int(en))+'.y'+str(int(yv))+'.x'+\
-        str(int(xv))+'.nc'
+        ofname = year+month+day+'.e'+str(int(en))+'.y'+ysave+'.x'+\
+        xsave+'.nc'
         
         # Data often finishes before end of file
         if len(remote_data.dims) == 6:
