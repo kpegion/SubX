@@ -74,9 +74,9 @@ if smooth_clim == 1:
     da_day_clim_smooth = da_day_clim_wnan.copy()
     for i in range(2):
         # Extand the DataArray to allow rolling to do periodic
-        da_day_clim_smooth = xr.concat(da_day_clim_smooth[-15,:],
+        da_day_clim_smooth = xr.concat([da_day_clim_smooth[-15:],
                                        da_day_clim_smooth,
-                                       da_day_clim_smooth[:,15],
+                                       da_day_clim_smooth[:15]],
                                        'dayofyear')
         # Rolling mean
         da_day_clim_smooth = da_day_clim_smooth.rolling(dayofyear=31,
