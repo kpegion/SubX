@@ -21,13 +21,15 @@ pl = plev
 yv = lat.0
 xv = lon.0
 
+ysave = str(int(yv))
+xsave = str(int(xv))
 url = 'http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/'
 ddir = outPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/ts/'
 outclimDir = outPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/clim/'
 if not os.path.isdir(outclimDir):
     os.makedirs(outclimDir)
-climfname = 'day_clim.y'+str(int(yv))+'.x'+str(int(xv))+'.nc'
-sclimfname = 'smooth_day_clim.y'+str(int(yv))+'.x'+str(int(xv))+'.nc'
+climfname = 'day_clim.y'+ysave+'.x'+xsave+'.nc'
+sclimfname = 'smooth_day_clim.y'+ysave+'.x'+xsave+'.nc'
 
 # Find out how many ensembles associated with the model:
 _rd = xr.open_dataarray(url+ins+'/.'+mo+'/.'+ft+'/.'+va+'/dods')
@@ -39,9 +41,9 @@ if gen_clim == 1:
     _l = []
     for e in range(1, nens+1):
         ens = 'e%d' % e
-        _l.append(xr.open_mfdataset(ddir+'*.'+ens+'*.nc',
+        _l.append(xr.open_mfdataset(ddir+'*.'+ens+'.y'+ysave+'.x'+xsave+'.nc',
                                     autoclose=True))
-    ds = xr.concat(el, dim='M')
+    ds = xr.concat(_l, dim='M')
     # Drop 1 dimensional coordinates
     ds = ds.squeeze()
     # Obtain data varialbe
