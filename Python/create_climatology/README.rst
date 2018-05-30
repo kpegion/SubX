@@ -12,9 +12,10 @@ To setup and run:
 .. parsed-literal:: 
  
     $ # edit variables in generate_ts_clim.ksh
+    $ chomd u+x generate_ts_clim.ksh
     $ ./generate_ts_clim.ksh
     $ # python create_ts_climatology.py
-    $ # Swtich smooth_clim on and gen_clim off
+    $ # Swtich ``smooth_clim`` on and ``gen_clim`` off
     $ # python create_ts_climatology.py    
 
 .. image:: img/example.png

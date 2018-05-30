@@ -18,6 +18,7 @@ To setup and run:
     $ conda env create -f ci/requirements-py36.yml
     $ conda activate SubX
     $ # edit variables in generate_ts_py_ens_files.ksh
+    $ chmod u+x generate_ts_py_ens_files.ksh
     $ ./generate_ts_py_ens_files.ksh
     $ # python getSubXdatats_e1.py
 
