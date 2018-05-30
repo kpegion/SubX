@@ -37,7 +37,7 @@ nens = len(_rd.M.values)
 if gen_clim == 1:
     # Use solution given in https://bit.ly/2xyhjCy
     _l = []
-    for e in range(0, nens+1):
+    for e in range(1, nens+1):
         ens = 'e%d' % e
         _l.append(xr.open_mfdataset(ddir+'*.'+ens+'*.nc',
                                     autoclose=True))
