@@ -29,7 +29,6 @@ cat createclim_ts_template.py\
 | sed 's/lat/'${lat}'/g'\
 | sed 's/lon/'${lon}'/g'\
 > create_ts_climatology.py
-done
 
 # This section submits the python scripts on a HPC.
 # Turned off in default
@@ -37,5 +36,4 @@ if [ 1 -eq 0 ];then
     rm -rf logs/*
     mkdir -p logs
     bsub < submit_scripts/submit_create_ts_clim.sh
-    done
 fi
