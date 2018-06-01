@@ -1,5 +1,5 @@
 #!/bin/ksh
-# Generate a file to create a climatology.
+# Generate a file to create anomalies.
 #
 # Created by Ray Bell (https://github.com/raybellwaves).
 
@@ -15,10 +15,10 @@ lat=65 # -90 - 90
 lon=305 # 0 - 359
 
 # Remove any files previously created
-rm -rf create_ts_climatology.py
+rm -rf create_ts_anomalies.py
 
 # Replace text in python template file for each ensemble member
-cat createclim_ts_template.py\
+cat createanom_ts_template.py\
 | sed 's|outdir|'${outdir}'|g'\
 | sed 's/ftype/'${ftype}'/g'\
 | sed 's/mod/'${mod}'/g'\
@@ -27,12 +27,12 @@ cat createclim_ts_template.py\
 | sed 's/plev/'${plev}'/g'\
 | sed 's/lat/'${lat}'/g'\
 | sed 's/lon/'${lon}'/g'\
-> create_ts_climatology.py
+> create_ts_anomalies.py
 
 # This section submits the python scripts on a HPC.
 # Turned off in default
 if [ 1 -eq 0 ];then
     rm -rf logs/*
     mkdir -p logs
-    bsub < submit_scripts/submit_create_ts_clim.sh
+    bsub < submit_scripts/submit_create_ts_anom.sh
 fi
