@@ -1,7 +1,6 @@
 #!/bin/ksh
 # Generate a file to create a climatology.
 #
-# 5/30/18
 # Created by Ray Bell (https://github.com/raybellwaves).
 
 # User defined variables:

@@ -1,7 +1,6 @@
 #!/bin/ksh
 # Generate individual files to allow downloading of each ensemble member in parallel.
 #
-# 5/16/18
 # Created by Ray Bell (https://github.com/raybellwaves).
 
 # User defined variables:
