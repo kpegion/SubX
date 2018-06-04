@@ -1,6 +1,6 @@
 """ Create ERAInterim daily anomalies.
 
-The file is filled in by generate_ts_anom.ksh.
+The file is filled in by generate_obs_ts_anom.ksh.
 """
 import os
 
