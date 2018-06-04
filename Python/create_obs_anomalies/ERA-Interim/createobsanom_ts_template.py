@@ -11,7 +11,7 @@ create_clim = 0 # 1, 0. conda activate SubX
 create_anom = 0 # 1, 0. conda activate SubX
 
 # Inputs
-modPath = 'moddir'
+moPath = 'moddir'
 ft = 'ftype'
 mo = 'mod'
 ins = 'inst'
@@ -25,7 +25,7 @@ obsPath = 'obsdir'+va+'/'+str(pl)+'/'
 if va == 'zg':
    paramid = "129.128"
 
-anomDir = modPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/anom/'
+anomDir = moPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/anom/'
 ysave = str(int(yv))
 xsave = str(int(xv))
 anomfname = 'daily_anomalies.y'+ysave+'.x'+xsave+'.nc'
