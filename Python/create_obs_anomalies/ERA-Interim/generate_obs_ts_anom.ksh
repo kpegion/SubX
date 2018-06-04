@@ -1,6 +1,5 @@
-
 #!/bin/ksh
-# Generate a file to create observation anomalies.
+# Generate a file to create ERA-Interim anomalies.
 #
 # Created by Ray Bell (https://github.com/raybellwaves).
 
@@ -14,7 +13,7 @@ var=zg # pr, tas, ts, rlut, ua, va, zg
 plev=500 # 200, 500, 850, 2m, sfc, toa, None
 lat=65 # -90 - 90
 lon=305 # 0 - 359
-obsdir=/place/with/lots/of/storage/ERAInterim/
+obsdir=/place/with/lots/of/storage/ERA-Interim/
 
 # Remove any files previously created
 rm -rf create_obs_ts_anomalies.py

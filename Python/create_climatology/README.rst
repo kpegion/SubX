@@ -16,7 +16,7 @@ To setup and run:
     $ chomd u+x generate_ts_clim.ksh
     $ ./generate_ts_clim.ksh
     $ # python create_ts_climatology.py
-    $ # Swtich ``smooth_clim`` on and ``gen_clim`` off
+    $ # swtich ``smooth_clim`` on and ``gen_clim`` off
     $ # python create_ts_climatology.py
 
 .. image:: img/example.png
