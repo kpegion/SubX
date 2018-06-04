@@ -38,7 +38,7 @@ if not os.path.isdir(obsclimPath):
     os.makedirs(obsclimPath)
 obsanomPath = obsPath+'daily/anom/'
 if not os.path.isdir(obsanomPath):
-    os.makedirs(obsanomPath):
+    os.makedirs(obsanomPath)
 obsfname = '1999-2016.y'+ysave+'.x'+xsave+'.nc'
 obsclimfname = 'smooth_day_clim_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
 obsanomfname = 'daily_anomalies_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
