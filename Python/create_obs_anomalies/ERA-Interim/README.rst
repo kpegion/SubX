@@ -16,6 +16,7 @@ To setup and run:
     $ conda env create -f ci/requirements-py35.yml 
     $ conda activate ECMWF
     $ # edit variables in generate_ts_obs_anom.ksh
+    $ chmod u+x generate_ts_obs_anom.ksh
     $ # python create_obs_ts_anomalies.py
     $ # switch create_clim on and download_data off
     $ conda deactivate ECMWF
