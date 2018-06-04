@@ -19,7 +19,7 @@ obsdir=/place/with/lots/of/storage/ERA-Interim/
 rm -rf create_obs_ts_anomalies.py
 
 # Replace text in python template file for each ensemble member
-cat createaobsanom_ts_template.py\
+cat createobsanom_ts_template.py\
 | sed 's|moddir|'${moddir}'|g'\
 | sed 's/ftype/'${ftype}'/g'\
 | sed 's/mod/'${mod}'/g'\
