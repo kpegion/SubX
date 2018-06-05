@@ -46,6 +46,8 @@ obsanomfname = 'daily_anomalies_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
 
 if download_data == 1:
     from ecmwfapi import ECMWFDataServer
+
+
     server = ECMWFDataServer()
     server.retrieve({"class": "ei",
                      "dataset": "interim",
@@ -63,3 +65,19 @@ if download_data == 1:
                      "format": "netcdf",
                      "target": obsPath+'6hrly/'+obsfname})
 
+
+if create_clim == 1:
+    import xarray as xr
+
+
+    da = xr.open_dataarray(obsPath+'6hrly/'+obsfname)
+    
+    if va == 'zg':
+        # Convert geopotential to geopotential height
+        da = da/9.80665
+
+    # Aveage 6 hourly data to daily data
+    da = da.resample(time='1D').mean()
+    print(da)
+
+     
