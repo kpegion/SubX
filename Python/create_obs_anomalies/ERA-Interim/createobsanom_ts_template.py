@@ -40,6 +40,7 @@ obsanomPath = obsPath+'daily/anom/'
 if not os.path.isdir(obsanomPath):
     os.makedirs(obsanomPath)
 obsfname = '1999-2016.y'+ysave+'.x'+xsave+'.nc'
+obsdayfname = '1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
 obsclimfname = 'smooth_day_clim_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
 obsanomfname = 'daily_anomalies_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
 
@@ -86,3 +87,4 @@ if create_clim == 1:
     for i, _L in enumerate(_da.L):
         _Sindex = _da.S + pd.Timedelta(str(i)+' days')
         obs[:, i] = da.sel(time=_Sindex)
+    obs.to_netcdf(obsPath+'daily/'+obsdayfname)
