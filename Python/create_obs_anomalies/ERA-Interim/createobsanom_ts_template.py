@@ -61,5 +61,5 @@ if download_data == 1:
                      "type": "an",
                      "area": areaid,
                      "format": "netcdf",
-                     "target": obsPath+obsfname})
+                     "target": obsPath+'6hrly/'+obsfname})
 
