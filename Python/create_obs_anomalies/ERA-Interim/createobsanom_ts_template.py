@@ -70,6 +70,7 @@ if download_data == 1:
 if create_clim == 1:
     import xarray as xr
     import pandas as pd
+    import numpy as np
 
 
     da = xr.open_dataarray(obsPath+'6hrly/'+obsfname) 
