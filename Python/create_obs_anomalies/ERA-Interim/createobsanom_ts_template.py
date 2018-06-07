@@ -40,10 +40,11 @@ obsanomPath = obsPath+'daily/anom/'
 if not os.path.isdir(obsanomPath):
     os.makedirs(obsanomPath)
 obsfname = '1999-2016.y'+ysave+'.x'+xsave+'.nc'
-obsdayfname = '1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
-obsclimfname = 'day_clim_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
-obssclimfname = 'smooth_day_clim_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
-obsanomfname = 'daily_anomalies_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
+obsdayfname = '1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
+obsclimfname = 'day_clim_1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
+obssclimfname = 'smooth_day_clim_1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+\
+                '.nc'
+obsanomfname = 'daily_anomalies_1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
 
 
 if download_data == 1:
@@ -112,3 +113,13 @@ if create_clim == 1:
     obs_day_clim_smooth = obs_day_clim_smooth.sel(\
                           dayofyear=obs_day_clim.dayofyear)
     obs_day_clim_smooth.to_netcdf(obsPath+'daily/clim/'+obssclimfname)
+
+
+if create_anom == 1:
+    import xarray as xr
+
+
+    da = xr.open_dataarray(obsPath+'daily/'+obsdayfname)
+    clim = xr.open_dataarray(obsPath+'daily/clim/'+obssclimfname)
+    obs_da_anom = da.groupby('S.dayofyear') - clim
+    obs_da_anom.to_netcdf(obsPath+'daily/anom/'+obsanomfname)
