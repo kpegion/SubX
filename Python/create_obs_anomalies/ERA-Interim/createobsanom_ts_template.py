@@ -41,7 +41,8 @@ if not os.path.isdir(obsanomPath):
     os.makedirs(obsanomPath)
 obsfname = '1999-2016.y'+ysave+'.x'+xsave+'.nc'
 obsdayfname = '1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
-obsclimfname = 'smooth_day_clim_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
+obsclimfname = 'day_clim_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
+obssclimfname = 'smooth_day_clim_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
 obsanomfname = 'daily_anomalies_1999-2016.y'+ysave+'.x'+xsave+'.'+mo+'.nc'
 
 
