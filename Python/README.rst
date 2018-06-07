@@ -6,3 +6,4 @@ The scripts are designed to be run in order:
 1. download_data
 2. create_climatology
 3. create_anomalies
+4. create_obs_anomalies

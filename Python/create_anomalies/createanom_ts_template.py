@@ -7,10 +7,6 @@ import xarray as xr
 import numpy as np
 
 
-# Sections of code to run
-gen_clim = 1 #1, 0
-smooth_clim = 0 #1, 0
-
 # Inputs
 outPath = 'outdir'
 ft = 'ftype'

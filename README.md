@@ -28,6 +28,7 @@ Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.m to download data
 * `Python/download_data/generate_ts_py_ens_files.ksh` creates python files to download each ensemble member for a chosen model etc. at one location. These can then be run in parallel. 
 * `Python/create_climatology/generate_ts_clim.ksh` creates a python file to create a daily climatology of the SubX data for a single point.
 * `Python/create_anomalies/generate_ts_anom.ksh` creates a python file to create daily anomalies of the SubX data for a single point.
+* `Python/create_obs_anomalies/ERA-Interim/generate_obs_ts_anom.ksh` creates a python file to create daily anomalies of ERA-Interim data to match the SubX data for a single point.
   
 # GrADS
   

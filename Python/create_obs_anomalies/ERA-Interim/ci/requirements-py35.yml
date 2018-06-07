@@ -1,0 +1,6 @@
+name: ECMWF
+channels:
+  - conda-forge
+dependencies:
+  - python=3.5
+  - ecmwf-api-client
