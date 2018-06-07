@@ -17,8 +17,8 @@ mo = 'mod'
 ins = 'inst'
 va = 'var'
 pl = plev
-yv = 65.0
-xv = 305.0
+yv = lat.0
+xv = lon.0
 obsPath = 'obsdir'+va+'/'+str(pl)+'/'
 
 
