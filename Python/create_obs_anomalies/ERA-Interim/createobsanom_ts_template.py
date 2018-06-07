@@ -72,8 +72,7 @@ if create_clim == 1:
     import pandas as pd
 
 
-    da = xr.open_dataarray(obsPath+'6hrly/'+obsfname)
-    
+    da = xr.open_dataarray(obsPath+'6hrly/'+obsfname) 
     if va == 'zg':
         # Convert geopotential to geopotential height
         da = da/9.80665
@@ -88,3 +87,26 @@ if create_clim == 1:
         _Sindex = _da.S + pd.Timedelta(str(i)+' days')
         obs[:, i] = da.sel(time=_Sindex)
     obs.to_netcdf(obsPath+'daily/'+obsdayfname)
+
+    # Create climatology same as model
+    obs_day_clim = obs.groupby('S.dayofyear').mean('S')
+    obs_day_clim.to_netcdf(obsPath+'daily/clim/'+obsclimfname)
+    x = np.empty((366, len(obs_day_clim.L)))
+    x.fill(np.nan)
+    _da = xr.DataArray(x, coords=[np.linspace(1, 366, num=366, dtype=np.int64),
+                                  obs_day_clim.L], dims = obs_day_clim.dims)
+    obs_day_clim_wnan = obs_day_clim.combine_first(_da)
+    obs_day_clim_smooth = obs_day_clim_wnan.copy()
+    for i in range(2):
+        obs_day_clim_smooth = xr.concat([obs_day_clim_smooth[-15:],
+                                        obs_day_clim_smooth,
+                                        obs_day_clim_smooth[:15]],
+                                        'dayofyear')
+        obs_day_clim_smooth = obs_day_clim_smooth.rolling(dayofyear=31,
+                                                          center=True,
+                                                          min_periods=1).mean()
+        obs_day_clim_smooth = obs_day_clim_smooth.isel(dayofyear=slice(15,
+                                                                       -15))
+    obs_day_clim_smooth = obs_day_clim_smooth.sel(\
+                          dayofyear=obs_day_clim.dayofyear)
+    obs_day_clim_smooth.to_netcdf(obsPath+'daily/clim/'+obssclimfname)
