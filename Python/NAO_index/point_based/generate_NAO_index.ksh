@@ -13,8 +13,8 @@ var=zg # pr, tas, ts, rlut, ua, va, zg
 plev=500 # 200, 500, 850, 2m, sfc, toa, None
 nlat=65 # -90 - 90
 nlon=305 # 0 - 359
-slat=43
-slon=323
+slat=43 # -90 - 90
+slon=323 # 0 - 359
 obsdir=/place/with/lots/of/storage/ERA-Interim/
 
 # Remove any files previously created

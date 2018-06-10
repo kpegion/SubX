@@ -8,7 +8,7 @@ import xarray as xr
 
 # Sections of code to run
 forecast = 1 # 1, 0
-ERA-Interim = 0 # 1, 0
+ERA_Interim = 0 # 1, 0
 
 # Inputs
 moPath = 'moddir'
@@ -40,7 +40,8 @@ obsNAOpath = obsPath+'daily/NAO/point_based/'
 if not os.path.isdir(obsNAOpath):
     os.makedirs(obsNAOpath)
 NAOfname = 'np.y'+nysave+'.x'+nxsave+'.sp.y'+sysave+'.x'+sxsave+'.nc'
-obsNAOfname = '1999-2016.np.y'+nysave+'.x'+nxsave+'.sp.y'+sysave+'.x'+sxsave+'SubX'+mo+'.nc'
+obsNAOfname = '1999-2016.np.y'+nysave+'.x'+nxsave+'.sp.y'+sysave+'.x'+sxsave+\
+'SubX'+mo+'.nc'
 
 if forecast == 1:
     # Read in north point
@@ -62,11 +63,14 @@ if forecast == 1:
     _sp = sda.mean(dim='M')
     nao = (_sp - _np) / (_sp - _np).std(dim='S')
     nao.to_netcdf(NAOpath+'emean.'+NAOfname)
-
-
-if ERA-Interim == 1:
-    nda = xr.open_dataarray(obsanomPath+obsanomfname+nysave+'.x'+nxsave+'SubX.'+mo+'.nc')
-    sda = xr.open_dataarray(obsanomPath+obsanomfname+sysave+'.x'+sxsave+'SubX.'+mo+'.nc')
     
+
+if ERA_Interim == 1:
+    nda = xr.open_dataarray(obsanomPath+obsanomfname+nysave+'.x'+nxsave+\
+                            'SubX.'+mo+'.nc')
+    sda = xr.open_dataarray(obsanomPath+obsanomfname+sysave+'.x'+sxsave+\
+                            'SubX.'+mo+'.nc')
+
     nao = (sda - nda) / (sda - nda).std(dim='S')
     nao.to_netcdf(obsNAOpath+obsNAOfname)
+
