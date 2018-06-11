@@ -56,12 +56,14 @@ if forecast == 1:
         _sp = sda.sel(M=e)
 
         nao = (_sp - _np) / (_sp - _np).std(dim='S')
+        nao.attrs['long_name'] = 'NAO'
         nao.to_netcdf(NAOpath+'e'+esave+'.'+NAOfname)
 
     # Ensemble mean
     _np = nda.mean(dim='M')
     _sp = sda.mean(dim='M')
     nao = (_sp - _np) / (_sp - _np).std(dim='S')
+    nao.attrs['long_name'] = 'NAO'
     nao.to_netcdf(NAOpath+'emean.'+NAOfname)
     
 
@@ -72,5 +74,6 @@ if ERA_Interim == 1:
                             'SubX.'+mo+'.nc')
 
     nao = (sda - nda) / (sda - nda).std(dim='S')
+    nao.attrs['long_name'] = 'NAO'
     nao.to_netcdf(obsNAOpath+obsNAOfname)
 
