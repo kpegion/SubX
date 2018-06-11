@@ -69,9 +69,9 @@ if forecast == 1:
 
 if ERA_Interim == 1:
     nda = xr.open_dataarray(obsanomPath+obsanomfname+nysave+'.x'+nxsave+\
-                            'SubX.'+mo+'.nc')
+                            '.SubX.'+mo+'.nc')
     sda = xr.open_dataarray(obsanomPath+obsanomfname+sysave+'.x'+sxsave+\
-                            'SubX.'+mo+'.nc')
+                            '.SubX.'+mo+'.nc')
 
     nao = (sda - nda) / (sda - nda).std(dim='S')
     nao.attrs['long_name'] = 'NAO'
