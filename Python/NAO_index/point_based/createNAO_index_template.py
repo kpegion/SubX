@@ -1,4 +1,4 @@
-""" Create ERA-Interim daily anomalies.
+""" Create NAO index.
 
 The file is filled in by generate_NAO_index.ksh.
 """
