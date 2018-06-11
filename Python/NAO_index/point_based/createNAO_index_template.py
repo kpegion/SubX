@@ -41,7 +41,7 @@ if not os.path.isdir(obsNAOpath):
     os.makedirs(obsNAOpath)
 NAOfname = 'np.y'+nysave+'.x'+nxsave+'.sp.y'+sysave+'.x'+sxsave+'.nc'
 obsNAOfname = '1999-2016.np.y'+nysave+'.x'+nxsave+'.sp.y'+sysave+'.x'+sxsave+\
-'SubX'+mo+'.nc'
+'.SubX.'+mo+'.nc'
 
 if forecast == 1:
     # Read in north point
