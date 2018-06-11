@@ -29,6 +29,7 @@ Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.m to download data
 * `Python/create_climatology/generate_ts_clim.ksh` creates a python file to create a daily climatology of the SubX data for a single point.
 * `Python/create_anomalies/generate_ts_anom.ksh` creates a python file to create daily anomalies of the SubX data for a single point.
 * `Python/create_obs_anomalies/ERA-Interim/generate_obs_ts_anom.ksh` creates a python file to create daily anomalies of ERA-Interim data to match the SubX data for a single point.
+* `Python/NAO_index/point_based/generate_NAO_index.ksh` creates a python file to create a daily NAO index using a point based method.
   
 # GrADS
   
