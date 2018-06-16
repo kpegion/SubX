@@ -18,6 +18,7 @@ ins = 'inst'
 va = 'var'
 pl = plev
 en = ens.0
+fe = fen.0
 
 inFname = rl+'.'+ins+'/.'+mo+'/.'+ft+'/.'+va+'/dods'
 remote_data = xr.open_dataarray(inFname)
@@ -25,13 +26,19 @@ if len(remote_data.dims) == 6:
     da = remote_data.sel(P=pl, M=en)
 if len(remote_data.dims) == 5:
     da = remote_data.sel(M=en)
+
+# For some models the ensembles start at 0
+esave = en
+if fe == 0.0:
+    esave = esave + 1
+    da.M.values = da.M.values + 1
     
 outDir = outPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/full/'
 if not os.path.isdir(outDir):
     os.makedirs(outDir)
     
 # Check if any files have been created so they are not downloaded again
-filescreated = glob.glob(outDir+'*.e'+str(int(en))+'.nc')
+filescreated = glob.glob(outDir+'*.e'+str(int(esave))+'.nc')
 nfilescreated = len(filescreated)
 if nfilescreated != 0:
     filescreated.sort()
@@ -63,7 +70,7 @@ for ic in range(_icstart, len(da.S.values)):
         day = str(date.day).zfill(2)
                     
         # Out file name
-        ofname = year+month+day+'.e'+str(int(en))+'.nc'
+        ofname = year+month+day+'.e'+str(int(esave))+'.nc'
         
         # Data often finishes before end of file
         if len(remote_data.dims) == 6:

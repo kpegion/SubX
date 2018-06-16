@@ -24,20 +24,31 @@ url=http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/
 rm -rf tmp.py
 rm -rf *_e*.py
 
-# Find out how many ensembles are associated with the model:
+# Find out the first and last ensemble associated with the model:
 
 # Write python script
 cat > tmp.py << EOF
 import xarray as xr
 _rd = xr.open_dataarray('${url}.${inst}/.${mod}/.${ftype}/.${var}/dods')
-print(len(_rd.M.values))
+print(int(_rd.M.values[0]))
 EOF
 
-# Run python script and return the number of ensembles
-nens=`python tmp.py`
+# Run python script and return the first ensemble
+fen=`python tmp.py`
 rm -rf tmp.py
 
-for ens in {1..${nens}}; do
+# Write python script
+cat > tmp.py << EOF
+import xarray as xr
+_rd = xr.open_dataarray('${url}.${inst}/.${mod}/.${ftype}/.${var}/dods')
+print(int(_rd.M.values[-1]))
+EOF
+
+# Run python script and return the last ensemble
+len=`python tmp.py`
+rm -rf tmp.py
+
+for ens in {${fen}..${len}}; do
     # Replace text in python template file for each ensemble member
     cat getSubXdatafull_template.py\
     | sed 's|url|'${url}'|g'\
@@ -48,6 +59,7 @@ for ens in {1..${nens}}; do
     | sed 's/var/'${var}'/g'\
     | sed 's/plev/'${plev}'/g'\
     | sed 's/ens/'${ens}'/g'\
+    | sed 's/fen/'${fen}'/g'\
     > getSubXdatafull_e${ens}.py
 done
 
@@ -57,7 +69,7 @@ if [ 1 -eq 0 ];then
     rm -rf logs/*
     rm -rf submit_scripts/*e*.sh
     mkdir -p logs
-    for ens in {1..${nens}}; do
+    for ens in {${fen}..${len}}; do
         # Replace text in submit template file
         cat submit_scripts/submit_full.sh | sed 's/ens/'${ens}'/g' > submit_scripts/submit_e${ens}.sh
         bsub < submit_scripts/submit_e${ens}.sh

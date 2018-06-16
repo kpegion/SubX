@@ -20,6 +20,7 @@ pl = plev
 yv = lat.0
 xv = lon.0
 en = ens.0
+fe = fen.0
 
 ysave = str(int(yv))
 xsave = str(int(xv))
@@ -29,13 +30,19 @@ if len(remote_data.dims) == 6:
     da = remote_data.sel(P=pl, M=en, Y=yv, X=xv)
 if len(remote_data.dims) == 5:
     da = remote_data.sel(M=en, Y=yv, X=xv)
-    
+
+# For some models the ensembles start at 0
+esave = en
+if fe == 0.0:
+    esave = esave + 1
+    da.M.values = da.M.values + 1
+
 outDir = outPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/ts/'
 if not os.path.isdir(outDir):
     os.makedirs(outDir)
     
 # Check if any files have been created so they are not downloaded again
-filescreated = glob.glob(outDir+'*.e'+str(int(en))+'.y'+ysave+\
+filescreated = glob.glob(outDir+'*.e'+str(int(esave))+'.y'+ysave+\
                          '.x'+xsave+'.nc')
 nfilescreated = len(filescreated)
 if nfilescreated != 0:
@@ -66,9 +73,9 @@ for ic in range(_icstart, len(da.S.values)):
         # Use zfill to pad with 0
         month = str(date.month).zfill(2)
         day = str(date.day).zfill(2)
-                    
+
         # Out file name
-        ofname = year+month+day+'.e'+str(int(en))+'.y'+ysave+'.x'+\
+        ofname = year+month+day+'.e'+str(int(esave))+'.y'+ysave+'.x'+\
         xsave+'.nc'
         
         # Data often finishes before end of file
