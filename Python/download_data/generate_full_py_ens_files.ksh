@@ -10,7 +10,7 @@
 # See http://cola.gmu.edu/kpegion/subx/docs/SubXDataQuickReferenceGuide.pdf
 #for notes on what presseure level is associated with the data.
 #
-outdir=/Volumes/SAMSUNG/WORK/POSTDOC_RSMAS_2016/DATA/SubX/
+outdir=/place/with/lots/of/storage/
 ftype=hindcast # hindcast, forecast
 mod=CCSM4 # 30LCESM1, 46LCESM1, CCSM4, CFSv2, FIMr1p1, GEFS, GEM, GEOS_V2p1, NESM
 inst=RSMAS # CESM,    CESM,     RSMAS, NCEP,  ESRL,    EMC,  ECCC, GMAO,     NRL
