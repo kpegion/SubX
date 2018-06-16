@@ -28,7 +28,7 @@ if len(remote_data.dims) == 5:
     da = remote_data.sel(M=en)
 
 # For some models the ensembles start at 0
-esave = en.cp()
+esave = en.copy()
 if fe == 0.0:
     esave = esave + 1
     da.M.values = da.M.values + 1
