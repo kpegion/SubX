@@ -32,7 +32,7 @@ rm -rf *_e*.py
 cat > tmp.py << EOF
 import xarray as xr
 _rd = xr.open_dataarray('${url}.${inst}/.${mod}/.${ftype}/.${var}/dods')
-print(_rd.M.values[0])
+print(int(_rd.M.values[0]))
 EOF
 
 # Run python script and return the first ensemble
@@ -43,7 +43,7 @@ rm -rf tmp.py
 cat > tmp.py << EOF
 import xarray as xr
 _rd = xr.open_dataarray('${url}.${inst}/.${mod}/.${ftype}/.${var}/dods')
-print(_rd.M.values[-1])
+print(int(_rd.M.values[-1]))
 EOF
 
 # Run python script and return the last ensemble
