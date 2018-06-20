@@ -15,7 +15,7 @@ lat=65 # -90 - 90
 lon=305 # 0 - 359
 subsampleS=1 # 0, 1
 startS=1999-01-07 # YYYY-MM-DD
-endS=2014-12-28 # YYY-MM-DD
+endS=2014-12-28 # YYYY-MM-DD
 
 # Remove any files previously created
 rm -rf create_ts_climatology.py
