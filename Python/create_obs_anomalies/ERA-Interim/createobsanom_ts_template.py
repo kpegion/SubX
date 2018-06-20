@@ -105,7 +105,6 @@ if create_clim == 1:
     for i, _L in enumerate(_da.L):
         _Sindex = _da.S + pd.Timedelta(str(i)+' days')
         obs[:, i] = da.sel(time=_Sindex)
-    obs.to_netcdf(obsPath+'daily/'+obsdayfname)
 
     # Create climatology same as model
     obs_day_clim = obs.groupby('S.dayofyear').mean('S')
