@@ -19,8 +19,10 @@ va = 'var'
 pl = plev
 yv = lat.0
 xv = lon.0
+subsampletime = subsampleS
+starttime = 'startS'
+endtime = 'endS'
 obsPath = 'obsdir'+va+'/'+str(pl)+'/'
-
 
 if va == 'zg':
    paramid = "129.128"
@@ -29,6 +31,7 @@ anomDir = moPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/anom/'
 ysave = str(int(yv))
 xsave = str(int(xv))
 anomfname = 'daily_anomalies.y'+ysave+'.x'+xsave+'.nc'
+
 areaid = ysave+'/'+xsave+'/'+ysave+'/'+xsave
 
 if not os.path.isdir(obsPath+'6hrly/'):
@@ -39,12 +42,12 @@ if not os.path.isdir(obsclimPath):
 obsanomPath = obsPath+'daily/anom/'
 if not os.path.isdir(obsanomPath):
     os.makedirs(obsanomPath)
-obsfname = '1999-2016.y'+ysave+'.x'+xsave+'.nc'
-obsdayfname = '1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
-obsclimfname = 'day_clim_1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
-obssclimfname = 'smooth_day_clim_1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+\
+obsfname = '1995-2017.y'+ysave+'.x'+xsave+'.nc'
+obsdayfname = 'y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
+obsclimfname = 'day_clim.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
+obssclimfname = 'smooth_day_clim.y'+ysave+'.x'+xsave+'.SubX.'+mo+\
                 '.nc'
-obsanomfname = 'daily_anomalies_1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
+obsanomfname = 'daily_anomalies.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
 
 
 if download_data == 1:
@@ -54,7 +57,7 @@ if download_data == 1:
     server = ECMWFDataServer()
     server.retrieve({"class": "ei",
                      "dataset": "interim",
-                     "date": "1999-01-01/to/2016-12-31",
+                     "date": "1995-01-01/to/2017-12-31",
                      "expver": "1",
                      "grid": "1.00/1.00",
                      "levelist": str(plev),
