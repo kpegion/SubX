@@ -16,6 +16,9 @@ va = 'var'
 pl = plev
 yv = lat.0
 xv = lon.0
+subsampletime = subsampleS
+starttime = 'startS'
+endtime = 'endS'
 
 ysave = str(int(yv))
 xsave = str(int(xv))
@@ -42,6 +45,16 @@ ds = xr.concat(_l, dim='M')
 ds = ds.squeeze()
 # Obtain data varialbe
 da = ds[va]
+
+# Sub-sample time
+if 1 == subsampletime:
+    da = da.sel(S=slice(starttime, endtime))
+else:
+    starttime = pd.Timestamp(da.S.values[0]).strftime('%Y-%m-%d')
+    endtime = pd.Timestamp(da.S.values[-1]).strftime('%Y-%m-%d') 
+# Update save file same
+climfname = starttime+'.'+endtime+'.'+climfname
+sclimfname = starttime+'.'+endtime+'.'+sclimfname
 
 # Ensemble mean
 da_ensmean = da.mean(dim='M')
