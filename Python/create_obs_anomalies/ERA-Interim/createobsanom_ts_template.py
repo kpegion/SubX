@@ -101,7 +101,7 @@ if create_clim == 1:
     # Put observationis into model format
     # Open model anomaly file
     _da = xr.open_dataarray(anomDir+anomfname)
-    obs = _da.mean(dim='M').copy()
+    obs = _da.isel(M=0).copy()
     for i, _L in enumerate(_da.L):
         _Sindex = _da.S + pd.Timedelta(str(i)+' days')
         obs[:, i] = da.sel(time=_Sindex)
