@@ -5,6 +5,7 @@ The file is filled in by generate_ts_clim.ksh.
 import os
 import xarray as xr
 import numpy as np
+import pandas as pd
 
 
 # Inputs
