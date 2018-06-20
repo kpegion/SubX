@@ -65,6 +65,8 @@ da_day_clim = da_ensmean.groupby('S.dayofyear').mean('S')
 
 # Save file
 da_day_clim.to_netcdf(outclimDir+climfname)
+# Open file to convert from dask to DataArray and simplify
+da_day_clim = xr.open_dataarray(outclimDir+climfname)
 
  # Pad the daily climatolgy with nans
 x = np.empty((366, len(da_day_clim.L)))
