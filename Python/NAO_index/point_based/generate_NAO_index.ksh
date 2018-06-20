@@ -15,6 +15,9 @@ nlat=65 # -90 - 90
 nlon=305 # 0 - 359
 slat=43 # -90 - 90
 slon=323 # 0 - 359
+subsampleS=1 # 0, 1
+startS=1999-01-07 # YYYY-MM-DD
+endS=2014-12-28 # YYYY-MM-DD
 obsdir=/place/with/lots/of/storage/ERA-Interim/
 
 # Remove any files previously created
@@ -32,6 +35,9 @@ cat createNAO_index_template.py\
 | sed 's/nlon/'${nlon}'/g'\
 | sed 's/slat/'${slat}'/g'\
 | sed 's/slon/'${slon}'/g'\
+| sed 's/subsampleS/'${subsampleS}'/g'\
+| sed 's/startS/'${startS}'/g'\
+| sed 's/endS/'${endS}'/g'\
 | sed 's|obsdir|'${obsdir}'|g'\
 > create_NAO_index.py
 

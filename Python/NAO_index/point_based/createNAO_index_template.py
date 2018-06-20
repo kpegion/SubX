@@ -4,6 +4,7 @@ The file is filled in by generate_NAO_index.ksh.
 """
 import os
 import xarray as xr
+import pandas as pd
 
 
 # Sections of code to run
@@ -21,6 +22,9 @@ nyv = nlat.0
 nxv = nlon.0
 syv = slat.0
 sxv = slon.0
+subsampletime = subsampleS
+starttime = 'startS'
+endtime = 'endS'
 obsPath = 'obsdir'+va+'/'+str(pl)+'/'
 
 nysave = str(int(nyv))
@@ -40,8 +44,19 @@ obsNAOpath = obsPath+'daily/NAO/point_based/'
 if not os.path.isdir(obsNAOpath):
     os.makedirs(obsNAOpath)
 NAOfname = 'np.y'+nysave+'.x'+nxsave+'.sp.y'+sysave+'.x'+sxsave+'.nc'
-obsNAOfname = '1999-2016.np.y'+nysave+'.x'+nxsave+'.sp.y'+sysave+'.x'+sxsave+\
+obsNAOfname = 'np.y'+nysave+'.x'+nxsave+'.sp.y'+sysave+'.x'+sxsave+\
 '.SubX.'+mo+'.nc'
+
+# Sub-sample time
+if 0 == subsampletime:
+    _rd = xr.open_dataarray(url+ins+'/.'+mo+'/.'+ft+'/.'+va+'/dods')
+    starttime = pd.Timestamp(_rd.S.values[0]).strftime('%Y-%m-%d')
+    endtime = pd.Timestamp(_rd.S.values[-1]).strftime('%Y-%m-%d')
+# Update file names
+anomfname = starttime+'.'+endtime+'.'+anomfname
+obsanomfname = starttime+'.'+endtime+'.'+obsanomfname
+NAOfname = starttime+'.'+endtime+'.'+NAOfname
+obsNAOfname = starttime+'.'+endtime+'.'+obsNAOfname
 
 if forecast == 1:
     # Read in north point
