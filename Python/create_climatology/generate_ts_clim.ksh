@@ -5,7 +5,7 @@
 
 # User defined variables:
 # Same as those specified in download_data/generate_ts_py_ens_files.ksh
-outdir=/projects/rsmas/kirtman/rxb826/DATA/SubX/
+outdir=/place/with/lots/of/storage/
 ftype=hindcast # hindcast, forecast
 mod=CCSM4 # 30LCESM1, 46LCESM1, CCSM4, CFSv2, FIMr1p1, GEFS, GEM, GEOS_V2p1, NESM
 inst=RSMAS # CESM,    CESM,     RSMAS, NCEP,  ESRL,    EMC,  ECCC, GMAO,     NRL 
