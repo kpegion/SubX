@@ -3,6 +3,7 @@
 The file is filled in by generate_obs_ts_anom.ksh.
 """
 import os
+import pandas as pd
 
 
 # Sections of code to run
@@ -49,6 +50,17 @@ obssclimfname = 'smooth_day_clim.y'+ysave+'.x'+xsave+'.SubX.'+mo+\
                 '.nc'
 obsanomfname = 'daily_anomalies.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
 
+# Sub-sample time
+if 0 == subsampletime:
+    _rd = xr.open_dataarray(url+ins+'/.'+mo+'/.'+ft+'/.'+va+'/dods')
+    starttime = pd.Timestamp(_rd.S.values[0]).strftime('%Y-%m-%d')
+    endtime = pd.Timestamp(_rd.S.values[-1]).strftime('%Y-%m-%d')
+# Update file names
+anomfname = starttime+'.'+endtime+'.'+anomfname
+obsdayfname = starttime+'.'+endtime+'.'+obsdayfname
+obsclimfname = starttime+'.'+endtime+'.'+obsclimfname
+obssclimfname = starttime+'.'+endtime+'.'+obssclimfname
+obsanomfname = starttime+'.'+endtime+'.'+obsanomfname
 
 if download_data == 1:
     from ecmwfapi import ECMWFDataServer
@@ -87,6 +99,7 @@ if create_clim == 1:
     da = da.resample(time='1D').mean()
 
     # Put observationis into model format
+    # Open model anomaly file
     _da = xr.open_dataarray(anomDir+anomfname)
     obs = _da.mean(dim='M').copy()
     for i, _L in enumerate(_da.L):
