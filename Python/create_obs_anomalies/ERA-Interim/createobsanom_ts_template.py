@@ -36,10 +36,10 @@ areaid = ysave+'/'+xsave+'/'+ysave+'/'+xsave
 
 if not os.path.isdir(obsPath+'6hrly/'):
     os.makedirs(obsPath+'6hrly/')
-obsclimPath = obsPath+'daily/clim/'
+obsclimPath = obsPath+'daily/SubX/clim/'
 if not os.path.isdir(obsclimPath):
     os.makedirs(obsclimPath)
-obsanomPath = obsPath+'daily/anom/'
+obsanomPath = obsPath+'daily/SubX/anom/'
 if not os.path.isdir(obsanomPath):
     os.makedirs(obsanomPath)
 obsfname = '1995-2017.y'+ysave+'.x'+xsave+'.nc'
