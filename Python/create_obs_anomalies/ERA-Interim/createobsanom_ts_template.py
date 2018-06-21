@@ -8,7 +8,6 @@ import pandas as pd
 
 # Sections of code to run
 download_data = 1 # 1, 0. conda acivate ECMWF
-create_clim = 0 # 1, 0. conda activate SubX
 create_anom = 0 # 1, 0. conda activate SubX
 
 # Inputs
@@ -84,7 +83,7 @@ if download_data == 1:
                      "target": obsPath+'6hrly/'+obsfname})
 
 
-if create_clim == 1:
+if create_anom == 1:
     import xarray as xr
     import pandas as pd
     import numpy as np
@@ -129,12 +128,8 @@ if create_clim == 1:
                           dayofyear=obs_day_clim.dayofyear)
     obs_day_clim_smooth.to_netcdf(obsPath+'daily/clim/'+obssclimfname)
 
-
-if create_anom == 1:
-    import xarray as xr
-
-
-    da = xr.open_dataarray(obsPath+'daily/'+obsdayfname)
-    clim = xr.open_dataarray(obsPath+'daily/clim/'+obssclimfname)
-    obs_da_anom = da.groupby('S.dayofyear') - clim
+    obs_da_anom = obs.groupby('S.dayofyear') - obs_day_clim_smooth
     obs_da_anom.to_netcdf(obsPath+'daily/anom/'+obsanomfname)
+
+
+
