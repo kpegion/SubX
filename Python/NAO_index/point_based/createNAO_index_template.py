@@ -35,7 +35,7 @@ sxsave = str(int(sxv))
 anomDir = moPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/anom/'
 anomfname = 'daily_anomalies.y'
 obsanomPath = obsPath+'daily/SubX/anom/'
-obsanomfname = 'daily_anomalies_1999-2016.y'
+obsanomfname = 'daily_anomalies.y'
 
 NAOpath = moPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/NAO/point_based/'
 if not os.path.isdir(NAOpath):
