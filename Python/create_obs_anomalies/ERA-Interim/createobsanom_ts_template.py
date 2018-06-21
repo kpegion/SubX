@@ -43,7 +43,6 @@ obsanomPath = obsPath+'daily/anom/'
 if not os.path.isdir(obsanomPath):
     os.makedirs(obsanomPath)
 obsfname = '1995-2017.y'+ysave+'.x'+xsave+'.nc'
-obsdayfname = 'y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
 obsclimfname = 'day_clim.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
 obssclimfname = 'smooth_day_clim.y'+ysave+'.x'+xsave+'.SubX.'+mo+\
                 '.nc'
@@ -56,7 +55,6 @@ if 0 == subsampletime:
     endtime = pd.Timestamp(_rd.S.values[-1]).strftime('%Y-%m-%d')
 # Update file names
 anomfname = starttime+'.'+endtime+'.'+anomfname
-obsdayfname = starttime+'.'+endtime+'.'+obsdayfname
 obsclimfname = starttime+'.'+endtime+'.'+obsclimfname
 obssclimfname = starttime+'.'+endtime+'.'+obssclimfname
 obsanomfname = starttime+'.'+endtime+'.'+obsanomfname
