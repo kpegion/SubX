@@ -3,11 +3,11 @@
 The file is filled in by generate_obs_ts_anom.ksh.
 """
 import os
+import pandas as pd
 
 
 # Sections of code to run
 download_data = 1 # 1, 0. conda acivate ECMWF
-create_clim = 0 # 1, 0. conda activate SubX
 create_anom = 0 # 1, 0. conda activate SubX
 
 # Inputs
@@ -19,8 +19,10 @@ va = 'var'
 pl = plev
 yv = lat.0
 xv = lon.0
+subsampletime = subsampleS
+starttime = 'startS'
+endtime = 'endS'
 obsPath = 'obsdir'+va+'/'+str(pl)+'/'
-
 
 if va == 'zg':
    paramid = "129.128"
@@ -29,23 +31,33 @@ anomDir = moPath+ft+'/'+mo+'/'+va+'/'+str(pl)+'/daily/anom/'
 ysave = str(int(yv))
 xsave = str(int(xv))
 anomfname = 'daily_anomalies.y'+ysave+'.x'+xsave+'.nc'
+
 areaid = ysave+'/'+xsave+'/'+ysave+'/'+xsave
 
 if not os.path.isdir(obsPath+'6hrly/'):
     os.makedirs(obsPath+'6hrly/')
-obsclimPath = obsPath+'daily/clim/'
+obsclimPath = obsPath+'daily/SubX/clim/'
 if not os.path.isdir(obsclimPath):
     os.makedirs(obsclimPath)
-obsanomPath = obsPath+'daily/anom/'
+obsanomPath = obsPath+'daily/SubX/anom/'
 if not os.path.isdir(obsanomPath):
     os.makedirs(obsanomPath)
-obsfname = '1999-2016.y'+ysave+'.x'+xsave+'.nc'
-obsdayfname = '1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
-obsclimfname = 'day_clim_1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
-obssclimfname = 'smooth_day_clim_1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+\
+obsfname = '1995-2017.y'+ysave+'.x'+xsave+'.nc'
+obsclimfname = 'day_clim.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
+obssclimfname = 'smooth_day_clim.y'+ysave+'.x'+xsave+'.SubX.'+mo+\
                 '.nc'
-obsanomfname = 'daily_anomalies_1999-2016.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
+obsanomfname = 'daily_anomalies.y'+ysave+'.x'+xsave+'.SubX.'+mo+'.nc'
 
+# Sub-sample time
+if 0 == subsampletime:
+    _rd = xr.open_dataarray(url+ins+'/.'+mo+'/.'+ft+'/.'+va+'/dods')
+    starttime = pd.Timestamp(_rd.S.values[0]).strftime('%Y-%m-%d')
+    endtime = pd.Timestamp(_rd.S.values[-1]).strftime('%Y-%m-%d')
+# Update file names
+anomfname = starttime+'.'+endtime+'.'+anomfname
+obsclimfname = starttime+'.'+endtime+'.'+obsclimfname
+obssclimfname = starttime+'.'+endtime+'.'+obssclimfname
+obsanomfname = starttime+'.'+endtime+'.'+obsanomfname
 
 if download_data == 1:
     from ecmwfapi import ECMWFDataServer
@@ -54,7 +66,7 @@ if download_data == 1:
     server = ECMWFDataServer()
     server.retrieve({"class": "ei",
                      "dataset": "interim",
-                     "date": "1999-01-01/to/2016-12-31",
+                     "date": "1995-01-01/to/2017-12-31",
                      "expver": "1",
                      "grid": "1.00/1.00",
                      "levelist": str(plev),
@@ -69,9 +81,8 @@ if download_data == 1:
                      "target": obsPath+'6hrly/'+obsfname})
 
 
-if create_clim == 1:
+if create_anom == 1:
     import xarray as xr
-    import pandas as pd
     import numpy as np
 
 
@@ -84,16 +95,16 @@ if create_clim == 1:
     da = da.resample(time='1D').mean()
 
     # Put observationis into model format
+    # Open model anomaly file
     _da = xr.open_dataarray(anomDir+anomfname)
-    obs = _da.mean(dim='M').copy()
+    obs = _da.isel(M=0).drop('M').copy()
     for i, _L in enumerate(_da.L):
         _Sindex = _da.S + pd.Timedelta(str(i)+' days')
         obs[:, i] = da.sel(time=_Sindex)
-    obs.to_netcdf(obsPath+'daily/'+obsdayfname)
 
     # Create climatology same as model
     obs_day_clim = obs.groupby('S.dayofyear').mean('S')
-    obs_day_clim.to_netcdf(obsPath+'daily/clim/'+obsclimfname)
+    obs_day_clim.to_netcdf(obsclimPath+obsclimfname)
     x = np.empty((366, len(obs_day_clim.L)))
     x.fill(np.nan)
     _da = xr.DataArray(x, coords=[np.linspace(1, 366, num=366, dtype=np.int64),
@@ -112,14 +123,7 @@ if create_clim == 1:
                                                                        -15))
     obs_day_clim_smooth = obs_day_clim_smooth.sel(\
                           dayofyear=obs_day_clim.dayofyear)
-    obs_day_clim_smooth.to_netcdf(obsPath+'daily/clim/'+obssclimfname)
+    obs_day_clim_smooth.to_netcdf(obsclimPath+obssclimfname)
 
-
-if create_anom == 1:
-    import xarray as xr
-
-
-    da = xr.open_dataarray(obsPath+'daily/'+obsdayfname)
-    clim = xr.open_dataarray(obsPath+'daily/clim/'+obssclimfname)
-    obs_da_anom = da.groupby('S.dayofyear') - clim
-    obs_da_anom.to_netcdf(obsPath+'daily/anom/'+obsanomfname)
+    obs_da_anom = obs.groupby('S.dayofyear') - obs_day_clim_smooth
+    obs_da_anom.to_netcdf(obsanomPath+obsanomfname)

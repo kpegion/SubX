@@ -12,7 +12,10 @@ inst=RSMAS # CESM,    CESM,     RSMAS, NCEP,  ESRL,    EMC,  ECCC, GMAO,     NRL
 var=zg # pr, tas, ts, rlut, ua, va, zg
 plev=500 # 200, 500, 850, 2m, sfc, toa, None
 lat=65 # -90 - 90
-lon=305 # 0 - 359
+lon=304 # 0 - 359
+subsampleS=1 # 0, 1
+startS=1999-01-07 # YYYY-MM-DD
+endS=2014-12-28 # YYYY-MM-DD
 obsdir=/place/with/lots/of/storage/ERA-Interim/
 
 # Remove any files previously created
@@ -28,6 +31,9 @@ cat createobsanom_ts_template.py\
 | sed 's/plev/'${plev}'/g'\
 | sed 's/lat/'${lat}'/g'\
 | sed 's/lon/'${lon}'/g'\
+| sed 's/subsampleS/'${subsampleS}'/g'\
+| sed 's/startS/'${startS}'/g'\
+| sed 's/endS/'${endS}'/g'\
 | sed 's|obsdir|'${obsdir}'|g'\
 > create_obs_ts_anomalies.py
 

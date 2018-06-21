@@ -17,7 +17,7 @@ inst=RSMAS # CESM,    CESM,     RSMAS, NCEP,  ESRL,    EMC,  ECCC, GMAO,     NRL
 var=zg # pr, tas, ts, rlut, ua, va, zg
 plev=500 # 200, 500, 850, 2m, sfc, toa, None
 lat=65 # -90 - 90
-lon=305 # 0 - 359
+lon=304 # 0 - 359
 
 # Default variables
 url=http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/

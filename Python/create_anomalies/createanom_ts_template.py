@@ -5,6 +5,7 @@ The file is filled in by generate_ts_anom.ksh.
 import os
 import xarray as xr
 import numpy as np
+import pandas as pd
 
 
 # Inputs
@@ -16,6 +17,9 @@ va = 'var'
 pl = plev
 yv = lat.0
 xv = lon.0
+subsampletime = subsampleS
+starttime = 'startS'
+endtime = 'endS'
 
 ysave = str(int(yv))
 xsave = str(int(xv))
@@ -42,7 +46,17 @@ ds = xr.concat(_l, dim='M')
 ds = ds.squeeze()
 # Obtain data varialbe
 da = ds[va]
-    
+
+# Sub-sample time
+if 1 == subsampletime:
+    da = da.sel(S=slice(starttime, endtime))
+else:
+    starttime = pd.Timestamp(da.S.values[0]).strftime('%Y-%m-%d')
+    endtime = pd.Timestamp(da.S.values[-1]).strftime('%Y-%m-%d') 
+# Update file names
+climfname = starttime+'.'+endtime+'.'+climfname
+anomfname = starttime+'.'+endtime+'.'+anomfname
+
 # Read in the daily climatology
 da_day_clim_s = xr.open_dataarray(outclimDir+climfname)
     
