@@ -83,7 +83,6 @@ if download_data == 1:
 
 if create_anom == 1:
     import xarray as xr
-    import pandas as pd
     import numpy as np
 
 
@@ -105,7 +104,7 @@ if create_anom == 1:
 
     # Create climatology same as model
     obs_day_clim = obs.groupby('S.dayofyear').mean('S')
-    obs_day_clim.to_netcdf(obsPath+'daily/clim/'+obsclimfname)
+    obs_day_clim.to_netcdf(obsclimPath+obsclimfname)
     x = np.empty((366, len(obs_day_clim.L)))
     x.fill(np.nan)
     _da = xr.DataArray(x, coords=[np.linspace(1, 366, num=366, dtype=np.int64),
@@ -124,10 +123,7 @@ if create_anom == 1:
                                                                        -15))
     obs_day_clim_smooth = obs_day_clim_smooth.sel(\
                           dayofyear=obs_day_clim.dayofyear)
-    obs_day_clim_smooth.to_netcdf(obsPath+'daily/clim/'+obssclimfname)
+    obs_day_clim_smooth.to_netcdf(obsclimPath+obssclimfname)
 
     obs_da_anom = obs.groupby('S.dayofyear') - obs_day_clim_smooth
-    obs_da_anom.to_netcdf(obsPath+'daily/anom/'+obsanomfname)
-
-
-
+    obs_da_anom.to_netcdf(obsanomPath+obsanomfname)
