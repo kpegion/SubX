@@ -58,7 +58,10 @@ climfname = starttime+'.'+endtime+'.'+climfname
 sclimfname = starttime+'.'+endtime+'.'+sclimfname
 
 # Ensemble mean
-da_ensmean = da.mean(dim='M')
+if nens > 1:
+    da_ensmean = da.mean(dim='M')
+else:
+    da_ensmean = da.copy()
 
 # Average daily data
 da_day_clim = da_ensmean.groupby('S.dayofyear').mean('S')
