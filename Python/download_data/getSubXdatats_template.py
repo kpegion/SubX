@@ -74,6 +74,11 @@ for ic in range(_icstart, len(da.S.values)):
         month = str(date.month).zfill(2)
         day = str(date.day).zfill(2)
 
+        # if S is YYY-MM-DDT12 substract 12 hours
+        # CHECK THIS
+        if date.hour == 12:
+            da2.S = da2.S - pd.Timedelta('12 hours')
+
         # Out file name
         ofname = year+month+day+'.e'+str(int(esave))+'.y'+ysave+'.x'+\
         xsave+'.nc'
