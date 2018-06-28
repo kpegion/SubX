@@ -5,7 +5,7 @@
 
 # User defined variables:
 # Same as those specified in download_data/generate_ts_py_ens_files.ksh
-outdir=/barnes-scratch/kmayer/1.Raw_data/FIM/
+outdir=/path/with/lots/of/space/
 ftype=hindcast # hindcast, forecast
 mod=FIMr1p1 # 30LCESM1, 46LCESM1, CCSM4, CFSv2, FIMr1p1, GEFS, GEM, GEOS_V2p1, NESM
 inst=ESRL # CESM,
