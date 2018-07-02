@@ -8,3 +8,5 @@ dependencies:
   - dask
   - bottleneck
   - cyordereddict
+  - pip:
+    - git+https://github.com/raybellwaves/xskillscore.git
