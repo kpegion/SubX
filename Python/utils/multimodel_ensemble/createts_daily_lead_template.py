@@ -38,11 +38,6 @@ modellist = ['30LCESM1', '46LCESM1', 'CCSM4', 'FIMr1p1', 'GEFS',
 _moddir = outanomDir % {'m':'CCSM4'}
 da = xr.open_dataarray(_moddir+anomfname)
 _dates = pd.date_range(starttime, endtime, freq='D')
-x = np.empty((len(_dates), len(da.L)))
-x.fill(np.nan)
-mme_da = xr.DataArray(x, coords=[_dates, da.L],
-                      dims=['S', 'L'])
-
 _L = [ pd.Timedelta(12,'h') + pd.Timedelta(days=i) for i in range(45) ]
 x = np.empty((len(_dates), len(_L)))
 x.fill(np.nan)
@@ -52,7 +47,7 @@ mme_da = xr.DataArray(x, coords={'X': da.X, 'L': da.L, 'Y': da.Y,
 
 for _, model in enumerate(modellist):
     _moddir = outanomDir % {'m':model}
-    da = xr.open_dataarray(_moddir+anomfane)
+    da = xr.open_dataarray(_moddir+anomfname)
     # Average the ensembles
     da = da.mean(dim='M')
     # average with MME
