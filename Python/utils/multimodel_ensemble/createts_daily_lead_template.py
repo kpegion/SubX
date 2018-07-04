@@ -36,7 +36,7 @@ modellist = ['30LCESM1', '46LCESM1', 'CCSM4', 'FIMr1p1', 'GEFS',
 # days from startS and endS and leadtime of up to 45 days
 # Read in one model to get leadtime coords
 _moddir = outanomDir % {'m':'CCSM4'}
-da = xr.open_dataarray(_moddir+anomfane)
+da = xr.open_dataarray(_moddir+anomfname)
 _dates = pd.date_range(starttime, endtime, freq='D')
 x = np.empty((len(_dates), len(da.L)))
 x.fill(np.nan)

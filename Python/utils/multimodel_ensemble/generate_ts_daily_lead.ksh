@@ -9,7 +9,7 @@ ftype=hindcast # hindcast, forecast
 # Assume all models may edit this later
 var=zg # pr, tas, ts, rlut, ua, va, zg
 plev=500 # 200, 500, 850, 2m, sfc, toa, None
-t=65 # -90 - 90
+lat=65 # -90 - 90
 lon=304 # 0 - 359
 subsampleS=1 # 0, 1
 startS=1999-01-07 # YYYY-MM-DD
