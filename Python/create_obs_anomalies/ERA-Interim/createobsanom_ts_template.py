@@ -144,8 +144,8 @@ if create_mme_anom == 1:
 
     
     obsanomtmpfname = obsanomfname.replace('mod', '%(m)s')
-    modellist = ['30LCESM1', '46LCESM1', 'CCSM4', 'FIMr1p1', 'GEFS',
-                 'GEM', 'GEOS_V2p1', 'NESM']
+    alllist = ['30LCESM1', '46LCESM1', 'CCSM4', 'FIMr1p1', 'GEFS',
+               'GEM', 'GEOS_V2p1', 'NESM']
     # Create an observed multi-ensemble ensembl file the same way
     # the modle mme is created: Average all the fiels todether
     # Read in one model to get leadtime coords
@@ -159,7 +159,7 @@ if create_mme_anom == 1:
                                          'P': da.P, 'S': _dates},
                               dims=['S', 'L'])
 
-    for _, model in enumerate(modellist):
+    for _, model in enumerate(alllist):
         fname = obsanomtmpfname % {'m':model}
         da = xr.open_dataarray(obsanomPath+fname)
         obs_mme_da = xr.concat([obs_mme_da, da], dim='_S').mean('_S')
