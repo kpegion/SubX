@@ -133,6 +133,7 @@ if create_anom == 1:
     obs_day_clim_smooth.to_netcdf(obsclimPath+obssclimfname)
 
     obs_da_anom = obs.groupby('S.dayofyear') - obs_day_clim_smooth
+    obs_day_anom = obs_day_anom.drop('dayofyear')
     obs_da_anom.to_netcdf(obsanomPath+obsanomfname)
 
 
@@ -142,7 +143,7 @@ if create_mme_anom == 1:
 
 
     
-    obsanomtmpfname = obsanomfname.replace('MME', '%(m)s')
+    obsanomtmpfname = obsanomfname.replace('mod', '%(m)s')
     modellist = ['30LCESM1', '46LCESM1', 'CCSM4', 'FIMr1p1', 'GEFS',
                  'GEM', 'GEOS_V2p1', 'NESM']
     # Create an observed multi-ensemble ensembl file the same way
@@ -164,4 +165,5 @@ if create_mme_anom == 1:
         obs_mme_da = xr.concat([obs_mme_da, da], dim='_S').mean('_S')
 
     obs_mme_da = obs_mme_da.dropna('S')
-    obs_mme_da.to_netcdf(outmmeDir+obsanomfname)
+    fname = obsanomtmpfname % {'m':'MME'}
+    obs_mme_da.to_netcdf(outmmeDir+fname)
