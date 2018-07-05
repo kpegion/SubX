@@ -159,8 +159,8 @@ if create_mme_anom == 1:
                                          'P': da.P, 'S': _dates},
                               dims=['S', 'L'])
 
-    for _, model in enumerate(alllist):
-        fname = obsanomtmpfname % {'m':model}
+    for _, mo in enumerate(alllist):
+        fname = obsanomtmpfname % {'m':mo}
         da = xr.open_dataarray(obsanomPath+fname)
         obs_mme_da = xr.concat([obs_mme_da, da], dim='_S').mean('_S')
 
