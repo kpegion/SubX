@@ -56,7 +56,7 @@ for _, model in enumerate(modellist):
     mme_da = xr.concat([mme_da, da], dim='_S').mean('_S')
 
 # Drop missing values
-mme_da = mme_da.dropna('S')
+mme_da = mme_da.dropna('S', how='all')
 # Save data
 mme_da.to_netcdf(outmmeDir+anomfname)
 

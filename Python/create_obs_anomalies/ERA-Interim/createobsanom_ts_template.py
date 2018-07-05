@@ -100,7 +100,10 @@ if create_anom == 1:
     if _da.M.size > 1:
         obs = _da.isel(M=0).drop('M').copy()
     else:
-        obs = _da.drop('M').copy()
+        if 'M' in _da.coords:
+            obs = _da.drop('M').copy()
+        else:
+            obs = _da.copy()
     for i, _L in enumerate(_da.L):
         _Sindex = _da.S + pd.Timedelta(str(i)+' days')
         obs[:, i] = da.sel(time=_Sindex)
