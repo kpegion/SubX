@@ -50,6 +50,8 @@ for _, model in enumerate(modellist):
     da = xr.open_dataarray(_moddir+anomfname)
     # Average the ensembles
     da = da.mean(dim='M')
+    # Drop nans in 'L' as NESM has a nan as L = 0
+    da = da.dropna('L')
     # average with MME
     mme_da = xr.concat([mme_da, da], dim='_S').mean('_S')
 
