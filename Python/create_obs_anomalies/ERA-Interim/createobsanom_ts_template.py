@@ -158,4 +158,4 @@ if create_mme_anom == 1:
         obs_mme_da = xr.concat([obs_mme_da, da], dim='_S').mean('_S')
 
     obs_mme_da = obs_mme_da.dropna('S', how='all')
-    obs_mme_da.to_netcdf(outmmeDir+obsanomfname)
+    obs_mme_da.to_netcdf(obsanomPath+obsanomfname)
