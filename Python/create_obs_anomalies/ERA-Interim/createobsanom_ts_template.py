@@ -136,7 +136,7 @@ if create_mme_anom == 1:
     import numpy as np
 
 
-    obsanomtmpfname = obsanomfname.copy() 
+    obsanomtmpfname = obsanomfname 
     obsanomtmpfname = obsanomtmpfname.replace('MME', '%(m)s')    
     alllist = ['30LCESM1', '46LCESM1', 'CCSM4', 'FIMr1p1', 'GEFS',
                'GEM', 'GEOS_V2p1', 'NESM']
