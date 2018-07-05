@@ -9,6 +9,7 @@ import pandas as pd
 # Sections of code to run
 download_data = 1 # 1, 0. conda acivate ECMWF
 create_anom = 0 # 1, 0. conda activate SubX
+create_mme_anom = 0 # 1, 0. conda activate SubX
 
 # Inputs
 moPath = 'moddir'
@@ -133,3 +134,34 @@ if create_anom == 1:
 
     obs_da_anom = obs.groupby('S.dayofyear') - obs_day_clim_smooth
     obs_da_anom.to_netcdf(obsanomPath+obsanomfname)
+
+
+if create_mme_anom == 1:
+    import xarray as xr
+    import numpy as np
+
+
+    obsanomfname = 'daily_anomalies.y'+ysave+'.x'+xsave+'.SubX.%(m)s.nc'
+    mmeobsanomfname = 'daily_anomalies.y'+ysave+'.x'+xsave+'.SubX.MME.nc'
+    modellist = ['30LCESM1', '46LCESM1', 'CCSM4', 'FIMr1p1', 'GEFS',
+                 'GEM', 'GEOS_V2p1', 'NESM']
+    # Create an observed multi-ensemble ensembl file the same way
+    # the modle mme is created: Average all the fiels todether
+    # Read in one model to get leadtime coords
+    fname = obsanomfname % {'m':'CCSM4'}
+    da = xr.open_dataarray(obsanomPath+fname)
+    _dates = pd.date_range(starttime, endtime, freq='D')
+    _L = [ pd.Timedelta(12,'h') + pd.Timedelta(days=i) for i in range(45) ]
+    x = np.empty((len(_dates), len(_L)))
+    x.fill(np.nan)
+    obs_mme_da = xr.DataArray(x, coords={'X': da.X, 'L': da.L, 'Y': da.Y,
+                                         'P': da.P, 'S': _dates},
+                              dims=['S', 'L'])
+
+    for _, model in enumerate(modellist):
+        fname = obsanomfname % {'m':model}
+        da = xr.open_dataarray(obsanomPath+fname)
+        obs_mme_da = xr.concat([obs_mme_da, da], dim='_S').mean('_S')
+
+    obs_mme_da = obs_mme_da.dropna('S')
+    obs_mme_da.to_netcdf(outmmeDir+mmeobsanomfname)
