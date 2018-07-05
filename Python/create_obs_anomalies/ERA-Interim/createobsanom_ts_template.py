@@ -133,7 +133,7 @@ if create_anom == 1:
     obs_day_clim_smooth.to_netcdf(obsclimPath+obssclimfname)
 
     obs_da_anom = obs.groupby('S.dayofyear') - obs_day_clim_smooth
-    obs_day_anom = obs_day_anom.drop('dayofyear')
+    obs_da_anom = obs_da_anom.drop('dayofyear')
     obs_da_anom.to_netcdf(obsanomPath+obsanomfname)
 
 
