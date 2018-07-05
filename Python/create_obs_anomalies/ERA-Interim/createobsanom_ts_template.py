@@ -136,8 +136,7 @@ if create_mme_anom == 1:
     import numpy as np
 
 
-    
-    obsanomtmpfname = obsanomfname.replace('mod', '%(m)s')
+    obsanomtmpfname = obsanomfname.replace('MME', '%(m)s')
     alllist = ['30LCESM1', '46LCESM1', 'CCSM4', 'FIMr1p1', 'GEFS',
                'GEM', 'GEOS_V2p1', 'NESM']
     # Create an observed multi-ensemble ensembl file the same way
@@ -158,6 +157,5 @@ if create_mme_anom == 1:
         da = xr.open_dataarray(obsanomPath+fname)
         obs_mme_da = xr.concat([obs_mme_da, da], dim='_S').mean('_S')
 
-    obs_mme_da = obs_mme_da.dropna('S')
-    fname = obsanomtmpfname % {'m':'MME'}
-    obs_mme_da.to_netcdf(outmmeDir+fname)
+    obs_mme_da = obs_mme_da.dropna('S', how='all')
+    obs_mme_da.to_netcdf(outmmeDir+obsanomfname)
