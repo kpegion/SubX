@@ -9,6 +9,7 @@ import pandas as pd
 
 # Sections of code to run
 forecast = 1 # 1, 0
+mme_forecast = 0 # 1, 0
 ERA_Interim = 0 # 1, 0
 
 # Inputs
@@ -81,6 +82,14 @@ if forecast == 1:
     nao.attrs['long_name'] = 'NAO'
     nao.to_netcdf(NAOpath+'emean.'+NAOfname)
     
+
+if mme_forecast == 1:
+    nda = xr.open_dataarray(anomDir+anomfname+nysave+'.x'+nxsave+'.nc')
+    sda = xr.open_dataarray(anomDir+anomfname+sysave+'.x'+sxsave+'.nc')    
+
+    nao = (sda - nda) / (sda - nda).std(dim='S')
+    nao.attrs['long_name'] = 'NAO'
+    nao.to_netcdf(obsNAOpath+obsNAOfname)
 
 if ERA_Interim == 1:
     nda = xr.open_dataarray(obsanomPath+obsanomfname+nysave+'.x'+nxsave+\
