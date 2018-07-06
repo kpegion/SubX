@@ -89,7 +89,8 @@ if mme_forecast == 1:
 
     nao = (sda - nda) / (sda - nda).std(dim='S')
     nao.attrs['long_name'] = 'NAO'
-    nao.to_netcdf(obsNAOpath+obsNAOfname)
+    nao.to_netcdf(NAOpath+'emean.'+NAOfname)
+
 
 if ERA_Interim == 1:
     nda = xr.open_dataarray(obsanomPath+obsanomfname+nysave+'.x'+nxsave+\
