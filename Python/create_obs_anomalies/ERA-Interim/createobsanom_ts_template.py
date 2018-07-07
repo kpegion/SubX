@@ -7,8 +7,8 @@ import pandas as pd
 
 
 # Sections of code to run
-download_data = 1 # 1, 0. conda acivate ECMWF
-create_anom = 0 # 1, 0. conda activate SubX
+download_data = 0 # 1, 0. conda acivate ECMWF
+create_anom = 1 # 1, 0. conda activate SubX
 create_mme_anom = 0 # 1, 0. conda activate SubX
 
 # Inputs
@@ -98,7 +98,10 @@ if create_anom == 1:
     # Put observationis into model format
     # Open model anomaly file
     _da = xr.open_dataarray(anomDir+anomfname)
-    obs = _da.isel(M=0).drop('M').copy()
+    if 'M' in _da.coords:
+        obs = _da.isel(M=0).drop('M').copy()
+    else:
+        obs = _da.copy()
     for i, _L in enumerate(_da.L):
         _Sindex = _da.S + pd.Timedelta(str(i)+' days')
         obs[:, i] = da.sel(time=_Sindex)
@@ -147,16 +150,32 @@ if create_mme_anom == 1:
     da = xr.open_dataarray(obsanomPath+fname)
     _dates = pd.date_range(starttime, endtime, freq='D')
     _L = [ pd.Timedelta(12,'h') + pd.Timedelta(days=i) for i in range(45) ]
-    x = np.empty((len(_dates), len(_L)))
+    x = np.empty((len(alllist), len(_dates), len(_L)))
     x.fill(np.nan)
-    obs_mme_da = xr.DataArray(x, coords={'X': da.X, 'L': da.L, 'Y': da.Y,
-                                         'P': da.P, 'S': _dates},
+    obs_mme_ds = xr.DataArray(x, coords={'X': da.X, 'L': da.L, 'Y': da.Y,
+                                         'P': da.P, 'S': _dates, 'sims': alllist},
+                              dims=['sims', 'S', 'L'])
+    # Populate mme_ds
+    for i, sims in enumerate(alllist):
+        fname = obsanomtmpfname % {'m': sims}
+        da = xr.open_dataarray(obsanomPath+fname)
+        # Find indices to populate start date
+        idates = np.ones(len(da.S), dtype=np.int16)
+        for j in range(len(idates)):
+            idates[j] = int(_dates.get_loc(da.S.values[j]))
+        obs_mme_ds[i,idates,0:len(da.L)] = da.values
+
+    # Keep start date if it has more than one model
+    fname = obsanomtmpfname % {'m':'CCSM4'}
+    da = xr.open_dataarray(obsanomPath+fname)
+    x2 = np.empty((len(_dates), len(_L)))
+    x2.fill(np.nan)
+    obs_mme_da = xr.DataArray(x2, coords={'X': da.X, 'L': da.L, 'Y': da.Y,
+                                          'P': da.P, 'S': _dates},
                               dims=['S', 'L'])
 
-    for _, mo in enumerate(alllist):
-        fname = obsanomtmpfname % {'m':mo}
-        da = xr.open_dataarray(obsanomPath+fname)
-        obs_mme_da = xr.concat([obs_mme_da, da], dim='_S').mean('_S')
-
-    obs_mme_da = obs_mme_da.dropna('S', how='all')
+    for i, _S in enumerate(obs_mme_ds.S):
+        if np.count_nonzero(~np.isnan(obs_mme_ds.isel(S=i, L=1).values)) > 1:
+            obs_mme_da[i, :] = obs_mme_ds.sel(S=_S).mean(dim='sims')
+    obs_mme_da = obs_mme_da.dropna('S')
     obs_mme_da.to_netcdf(obsanomPath+obsanomfname)
