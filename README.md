@@ -26,12 +26,12 @@ Important Note: Before Apr 10, 2018, use getSubXFieldsIRI.m to download data
   
 # Python
   
-* `Python/download_data/generate_full_py_ens_files.ksh` creates python files to download each ensemble member          for a chosen model etc. These can then be run in parallel. 
-* `Python/download_data/generate_ts_py_ens_files.ksh` creates python files to download each ensemble member for a chosen model etc. at one location. These can then be run in parallel. 
-* `Python/create_climatology/generate_ts_clim.ksh` creates a python file to create a daily climatology of the SubX data for a single point.
-* `Python/create_anomalies/generate_ts_anom.ksh` creates a python file to create daily anomalies of the SubX data for a single point.
-* `Python/create_obs_anomalies/ERA-Interim/generate_obs_ts_anom.ksh` creates a python file to create daily anomalies of ERA-Interim data to match the SubX data for a single point.
-* `Python/NAO_index/point_based/generate_NAO_index.ksh` creates a python file to create a daily NAO index using a point based method.
+* [`generate_ts_py_ens_files.ksh`](https://github.com/kpegion/SubX/blob/master/Python/download_data/generate_ts_py_ens_files.ksh) creates python files to download each ensemble member for a chosen model etc. at one location. These can then be run in parallel. 
+* [`generate_ts_clim.ksh`](https://github.com/kpegion/SubX/blob/master/Python/create_climatology/generate_ts_clim.ksh) creates a python file to create a daily climatology of the SubX data for a single point.
+* [`generate_ts_anom.ksh`](https://github.com/kpegion/SubX/blob/master/Python/create_anomalies/generate_ts_anom.ksh) creates a python file to create daily anomalies of the SubX data for a single point.
+* [`generate_obs_ts_anom.ksh`](https://github.com/kpegion/SubX/blob/master/Python/create_obs_anomalies/ERA-Interim/generate_obs_ts_anom.ksh) creates a python file to create daily anomalies of ERA-Interim data to match the SubX data for a single point.
+* [`point_based/generate_NAO_index.ksh`](https://github.com/kpegion/SubX/blob/master/Python/NAO_index/point_based/generate_NAO_index.ksh) creates a python file to create a daily NAO index using a point based method.
+* [`plotting/plot_NAO_skill`](https://github.com/kpegion/SubX/blob/add-mme/Python/utils/plotting/plot_NAO_skill.py) creates the NAO skill figure in the BAMS paper.
   
 # GrADS
   

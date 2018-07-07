@@ -7,8 +7,9 @@ import pandas as pd
 
 
 # Sections of code to run
-download_data = 1 # 1, 0. conda acivate ECMWF
-create_anom = 0 # 1, 0. conda activate SubX
+download_data = 0 # 1, 0. conda acivate ECMWF
+create_anom = 1 # 1, 0. conda activate SubX
+create_mme_anom = 0 # 1, 0. conda activate SubX
 
 # Inputs
 moPath = 'moddir'
@@ -97,10 +98,10 @@ if create_anom == 1:
     # Put observationis into model format
     # Open model anomaly file
     _da = xr.open_dataarray(anomDir+anomfname)
-    if _da.M.size > 1:
+    if 'M' in _da.coords:
         obs = _da.isel(M=0).drop('M').copy()
     else:
-        obs = _da.drop('M').copy()
+        obs = _da.copy()
     for i, _L in enumerate(_da.L):
         _Sindex = _da.S + pd.Timedelta(str(i)+' days')
         obs[:, i] = da.sel(time=_Sindex)
@@ -129,4 +130,52 @@ if create_anom == 1:
     obs_day_clim_smooth.to_netcdf(obsclimPath+obssclimfname)
 
     obs_da_anom = obs.groupby('S.dayofyear') - obs_day_clim_smooth
+    obs_da_anom = obs_da_anom.drop('dayofyear')
     obs_da_anom.to_netcdf(obsanomPath+obsanomfname)
+
+
+if create_mme_anom == 1:
+    import xarray as xr
+    import numpy as np
+
+
+    obsanomtmpfname = obsanomfname 
+    obsanomtmpfname = obsanomtmpfname.replace('MME', '%(m)s')    
+    alllist = ['30LCESM1', '46LCESM1', 'CCSM4', 'FIMr1p1', 'GEFS',
+               'GEM', 'GEOS_V2p1', 'NESM']
+    # Create an observed multi-ensemble ensembl file the same way
+    # the modle mme is created: Average all the fiels todether
+    # Read in one model to get leadtime coords
+    fname = obsanomtmpfname % {'m':'CCSM4'}
+    da = xr.open_dataarray(obsanomPath+fname)
+    _dates = pd.date_range(starttime, endtime, freq='D')
+    _L = [ pd.Timedelta(12,'h') + pd.Timedelta(days=i) for i in range(45) ]
+    x = np.empty((len(alllist), len(_dates), len(_L)))
+    x.fill(np.nan)
+    obs_mme_ds = xr.DataArray(x, coords={'X': da.X, 'L': da.L, 'Y': da.Y,
+                                         'P': da.P, 'S': _dates, 'sims': alllist},
+                              dims=['sims', 'S', 'L'])
+    # Populate mme_ds
+    for i, sims in enumerate(alllist):
+        fname = obsanomtmpfname % {'m': sims}
+        da = xr.open_dataarray(obsanomPath+fname)
+        # Find indices to populate start date
+        idates = np.ones(len(da.S), dtype=np.int16)
+        for j in range(len(idates)):
+            idates[j] = int(_dates.get_loc(da.S.values[j]))
+        obs_mme_ds[i,idates,0:len(da.L)] = da.values
+
+    # Keep start date if it has more than one model
+    fname = obsanomtmpfname % {'m':'CCSM4'}
+    da = xr.open_dataarray(obsanomPath+fname)
+    x2 = np.empty((len(_dates), len(_L)))
+    x2.fill(np.nan)
+    obs_mme_da = xr.DataArray(x2, coords={'X': da.X, 'L': da.L, 'Y': da.Y,
+                                          'P': da.P, 'S': _dates},
+                              dims=['S', 'L'])
+
+    for i, _S in enumerate(obs_mme_ds.S):
+        if np.count_nonzero(~np.isnan(obs_mme_ds.isel(S=i, L=1).values)) > 1:
+            obs_mme_da[i, :] = obs_mme_ds.sel(S=_S).mean(dim='sims')
+    obs_mme_da = obs_mme_da.dropna('S')
+    obs_mme_da.to_netcdf(obsanomPath+obsanomfname)

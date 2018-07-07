@@ -64,4 +64,6 @@ da_day_anom = da.groupby('S.dayofyear') - da_day_clim_s
 if len(da_day_anom.dims) == 2:
     # Add M back in for one ensemble models
     da_day_anom = da_day_anom.expand_dims('M')
+# Drop the dayofyear coordinate
+da_day_anom = da_day_anom.drop('dayofyear')
 da_day_anom.to_netcdf(outanomDir+anomfname)
