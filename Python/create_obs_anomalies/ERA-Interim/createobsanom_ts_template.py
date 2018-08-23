@@ -103,7 +103,10 @@ if create_anom == 1:
     else:
         obs = _da.copy()
     for i, _L in enumerate(_da.L):
-        _Sindex = _da.S + pd.Timedelta(str(i)+' days')
+        if mo == 'CCSM4':
+            _Sindex = _da.S + pd.Timedelta(str(i)+' days') - pd.Timedelta('1 days')
+        else:
+            _Sindex = _da.S + pd.Timedelta(str(i)+' days')
         obs[:, i] = da.sel(time=_Sindex)
 
     # Create climatology same as model
