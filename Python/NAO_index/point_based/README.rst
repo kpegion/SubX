@@ -1,7 +1,7 @@
 README
 ------
 
-This repository contains python code for creating the NAO index using the method of `Scaife14 <https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014GL059637>`__.
+This repository contains python code for creating the NAO index. The NAO is defined as a point-based index with the two points calculated as the maximum and minimum winter geopotential height at 500 hPa (Z500) in the leading North Atlantic EOF spatial pattern (20°N-90°N, 80°W-40°E). The two points selected are 65°N, 56°W and 42°N, 38°W. The daily NAO is then calculated as the standardized difference between Z500 anomalies at the two points.
 
 This code assumes you have used the code in ``download_data/``, ``create_climatology/``, ``create_anomalies/`` (and ``create_obs_anomalies/``) to generate the files.
 
